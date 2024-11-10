@@ -38,3 +38,34 @@ class Solution {
     }
 }
 ```
+
+## [2.二叉树的锯齿形层序遍历]()
+思路：和上一题类似，然后偶数层需要反转。   
+代码：
+```
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<TreeNode> queue = new LinkedList<>();
+        if(root != null) queue.addLast(root);
+        int depth = 0; //偶数层反转
+        while(!queue.isEmpty())
+        {
+            List<Integer> temp = new ArrayList<>();
+            int n = queue.size();
+            depth++;
+            for(int i = 0; i < n; i++)
+            {
+                TreeNode node = queue.removeFirst();
+                temp.add(node.val);
+                if(node.left != null) queue.addLast(node.left);
+                if(node.right != null) queue.addLast(node.right);
+            }
+            if(depth % 2 == 0)
+                Collections.reverse(temp);
+            ans.add(temp);
+        }   
+        return ans;              
+    }
+}
+```
