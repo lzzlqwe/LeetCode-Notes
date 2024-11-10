@@ -149,3 +149,42 @@ class Solution {
     }
 }
 ```
+
+## [7.反转二叉树的奇数层](https://leetcode.cn/problems/reverse-odd-levels-of-binary-tree/description/)
+思路：BFS，用ArrayList来代表队列，偶数层时直接把队列复制到一个新的ArrayList并进行交换值操作，队列清空。   
+代码：
+```
+class Solution {
+    public TreeNode reverseOddLevels(TreeNode root) {
+        List<TreeNode> queue = new ArrayList<>();
+        int depth = 0;
+        queue.add(root);
+        while(!queue.isEmpty())
+        {
+            List<TreeNode> layer = queue; //拿到该层所有节点
+            queue = new ArrayList<>();  //清空队列
+            depth++;
+            if(depth % 2 == 0) //偶数层，交换值
+            {
+                int l = 0;
+                int r = layer.size()-1;
+                while(l <= r)
+                {
+                    int t = layer.get(l).val;
+                    layer.get(l).val = layer.get(r).val;
+                    layer.get(r).val = t;
+                    l++;
+                    r--;
+                }
+            }
+            for(int i = 0; i < layer.size(); i++)
+            {
+                TreeNode node = layer.get(i);
+                if(node.left != null) queue.add(node.left);
+                if(node.right != null) queue.add(node.right);
+            }
+        }
+        return root;
+    }
+}
+```
