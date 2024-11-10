@@ -90,3 +90,32 @@ class Solution {
     }
 }
 ```
+
+## [4.https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/](https://leetcode.cn/problems/binary-tree-level-order-traversal-ii/description/)
+思路：层序遍历，然后反转最后的答案即可。   
+代码：
+```
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        List<TreeNode> queue = new LinkedList<>();
+        if(root != null) queue.addLast(root);
+        while(!queue.isEmpty())
+        {
+            List<Integer> tmp = new ArrayList<>();
+            int n = queue.size(); //得到当前层的节点数
+            for(int i = 0; i < n; i++) //遍历当前层的所有节点
+            {
+                TreeNode node = queue.removeFirst();
+                tmp.add(node.val);
+                if(node.left != null) queue.addLast(node.left);
+                if(node.right != null) queue.addLast(node.right);
+            }
+            ans.add(tmp);
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+}
+```
