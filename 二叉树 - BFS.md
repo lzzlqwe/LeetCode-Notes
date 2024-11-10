@@ -188,3 +188,48 @@ class Solution {
     }
 }
 ```
+
+## [8.二叉树的堂兄弟节点 II](https://leetcode.cn/problems/cousins-in-binary-tree-ii/description/)
+思路：
+![image](https://github.com/user-attachments/assets/4362305d-5558-4c28-9655-3734655f6d87)
+  
+代码：
+```
+class Solution {
+    public TreeNode replaceValueInTree(TreeNode root) {
+        List<TreeNode> queue = new ArrayList<>();
+        root.val = 0;
+        queue.add(root);
+        while(!queue.isEmpty())
+        {
+            List<TreeNode> layer = queue; //得到当前层
+            queue = new ArrayList<>(); //队列清空
+            int sum = 0; //下一层的和
+            for(TreeNode node: layer) //第一次循环当前层,计算下一层的和
+            {
+                if(node.left != null) sum += node.left.val;
+                if(node.right != null) sum += node.right.val;
+            }
+            for(TreeNode node: layer) //第二次循环当前层,更新下一层节点的值
+            {
+                //计算亲兄弟的和
+                int familySum = 0;
+                if(node.left != null) familySum += node.left.val;
+                if(node.right != null) familySum += node.right.val;
+                //更新下一层的值和队列
+                if(node.left != null)
+                {
+                    node.left.val = sum - familySum;
+                    queue.add(node.left);
+                }
+                if(node.right != null)
+                {
+                    node.right.val = sum - familySum;
+                    queue.add(node.right);
+                }
+            }
+        }
+        return root;
+    }
+}
+```
