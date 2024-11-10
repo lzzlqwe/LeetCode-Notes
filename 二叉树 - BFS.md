@@ -39,7 +39,7 @@ class Solution {
 }
 ```
 
-## [2.二叉树的锯齿形层序遍历]()
+## [2.二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/description/)
 思路：和上一题类似，然后偶数层需要反转。   
 代码：
 ```
@@ -66,6 +66,27 @@ class Solution {
             ans.add(temp);
         }   
         return ans;              
+    }
+}
+```
+
+## [3.找树左下角的值](https://leetcode.cn/problems/find-bottom-left-tree-value/description/)
+思路：反向层序遍历（从右到左），最后一个值就是答案。   
+代码：
+```
+class Solution {
+    public int findBottomLeftValue(TreeNode root) {
+        List<TreeNode> queue = new LinkedList<>();
+        queue.addLast(root);
+        int val = 0; //记录反向层序遍历的值，最后一个值是答案
+        while(!queue.isEmpty())
+        {
+            TreeNode node = queue.removeFirst();
+            val = node.val;
+            if(node.right != null) queue.addLast(node.right);
+            if(node.left != null) queue.addLast(node.left);
+        }
+        return val;
     }
 }
 ```
