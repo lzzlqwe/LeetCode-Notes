@@ -119,3 +119,32 @@ class Solution {
     }
 }
 ```
+
+## [5.填充每个节点的下一个右侧节点指针](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/)
+思路：反向层序遍历，每一层进行next指针的指向即可。   
+代码：
+```
+class Solution {
+    public Node connect(Node root) {
+        List<Node> queue = new LinkedList<>();
+
+        //反向层序遍历
+        if(root != null) queue.addLast(root);
+        while(!queue.isEmpty())
+        {
+            int n = queue.size(); 
+            Node nxt = null; //表示下一节点
+            for(int i = 0; i < n; i++) 
+            {
+                Node node = queue.removeFirst();
+                node.next = nxt; //当前节点指向下一节点
+                nxt = node;  //更新下一节点
+                
+                if(node.right != null) queue.addLast(node.right);
+                if(node.left != null) queue.addLast(node.left);
+            }
+        }
+        return root;
+    }
+}
+```
