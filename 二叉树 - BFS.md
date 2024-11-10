@@ -121,6 +121,7 @@ class Solution {
 ```
 
 ## [5.填充每个节点的下一个右侧节点指针](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/)
+## [6.填充每个节点的下一个右侧节点指针 II](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/)
 思路：反向层序遍历，每一层进行next指针的指向即可。   
 代码：
 ```
