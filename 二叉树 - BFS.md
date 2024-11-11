@@ -122,6 +122,7 @@ class Solution {
 
 ## [5.填充每个节点的下一个右侧节点指针](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node/description/)
 ## [6.填充每个节点的下一个右侧节点指针 II](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/description/)
+### 方法一：
 思路：反向层序遍历，每一层进行next指针的指向即可。   
 代码：
 ```
@@ -144,6 +145,39 @@ class Solution {
                 if(node.right != null) queue.addLast(node.right);
                 if(node.left != null) queue.addLast(node.left);
             }
+        }
+        return root;
+    }
+}
+```
+### 方法二（使用常量级额外空间）：
+思路：  
+![image](https://github.com/user-attachments/assets/e19b88a6-72ae-4d25-b549-f368b8eaf12a)
+
+代码：
+```
+class Solution {
+    public Node connect(Node root) {
+        Node cur = root; //指向当前层的节点
+        while(cur != null)
+        {
+            Node nxtHead = cur.left; //记录下一层的首节点
+            Node nxt = new Node(); //下一层的哨兵节点，用于连接下一个节点
+            while(cur != null)
+            {
+                if(cur.left != null)
+                {
+                    nxt.next = cur.left;
+                    nxt = cur.left;
+                }
+                if(cur.right != null)
+                {
+                    nxt.next = cur.right;
+                    nxt = cur.right;
+                }
+                cur = cur.next;
+            }
+            cur = nxtHead; //cur指向下一层的首节点
         }
         return root;
     }
