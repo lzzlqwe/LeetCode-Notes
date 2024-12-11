@@ -27,7 +27,7 @@ class Solution {
 }
 ```
 
-## [2.](https://leetcode.cn/problems/edit-distance/description/)
+## [2.编辑距离](https://leetcode.cn/problems/edit-distance/description/)
 思路：dp[i][j]表示word1前i个字符转换为word2的前j个字符的最少操作数。状态转移方程如下：   
 ![image](https://github.com/user-attachments/assets/102dd6bd-f89d-45b7-bfe9-645ca554dae9)
 
