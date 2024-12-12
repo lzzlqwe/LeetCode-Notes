@@ -62,3 +62,31 @@ class Solution {
     }
 }
 ```
+
+# 最长递增子序列 LIS
+
+## [1.最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/description/)
+思路1：dp[i]表示以nums[i]元素结尾的最长递增子序列长度。状态转移方程为dp[i] = max{dp[j]}+1，其中j<i且nums[j] < nums[i]。      
+代码：
+```
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n]; //dp[i]表示以nums[i]元素结尾的最长递增子序列长度。
+        //状态转移方程为dp[i] = max{dp[j]}+1，其中j<i且nums[j] < nums[i]
+        int ans = 0;
+        for(int i = 0; i < n; i++)
+        {
+            int max = 0;
+            for(int j = 0; j < i; j++)
+            {
+                if(nums[j] < nums[i] && dp[j] > max)
+                    max = dp[j];
+            }
+            dp[i] = max + 1;
+            if(dp[i] > ans) ans = dp[i];
+        }
+        return ans;
+    }
+}
+```
