@@ -66,7 +66,7 @@ class Solution {
 # 最长递增子序列 LIS
 
 ## [1.最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/description/)
-思路1：dp[i]表示以nums[i]元素结尾的最长递增子序列长度。状态转移方程为dp[i] = max{dp[j]}+1，其中j<i且nums[j] < nums[i]。      
+思路一：dp[i]表示以nums[i]元素结尾的最长递增子序列长度。状态转移方程为dp[i] = max{dp[j]}+1，其中j<i且nums[j] < nums[i]。      
 代码：
 ```
 class Solution {
