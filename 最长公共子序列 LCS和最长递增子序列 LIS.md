@@ -90,3 +90,47 @@ class Solution {
     }
 }
 ```
+
+思路二：贪心 + 二分查找。考虑一个简单的贪心，如果我们要使上升子序列尽可能的长，则我们需要让序列上升得尽可能慢，因此我们希望每次在上升子序列最后加上的那个数尽可能的小。基于上面的贪心思路，我们维护一个数组 d[i] ，表示长度为 i 的最长上升子序列的末尾元素的最小值，用 len 记录目前最长上升子序列的长度，起始时 len 为 1，d[1]=nums[0]。依次遍历数组 nums 中的每个元素，并更新数组 d 和 len 的值。如果 nums[i]>d[len] 则更新 len=len+1，并将nums[i]添加到d数组末尾。否则在 d[1…len]（二分查找闭区间写法，下标从1到len）中找到第一个大于等于nums[i]的下标k，将d[k]覆盖为nums[i]。最终返回len即为结果。
+
+代码：
+```
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] d = new int[n+1]; //d[i]表示长度为i的严格递增子序列的末尾最小元素
+        int len = 1; //记录目前最长上升子序列的长度
+        d[len] = nums[0]; //d数组可证明是单调递增的
+        for(int j = 1; j < n; j++)
+        {
+            if(nums[j] > d[len])
+            {
+                len++;
+                d[len] = nums[j];
+            }
+            else
+            {
+                int index = lower_bound(d, 1, len, nums[j]);
+                d[index] = nums[j];
+            }
+        }
+        return len;
+    }
+    
+    //二分查找
+    public int lower_bound(int[] d, int left, int right, int target)
+    {
+        int l = left;
+        int r = right;
+        while(l <= r)
+        {
+            int mid = (r - l) / 2 + l;
+            if(d[mid] < target)
+                l = mid + 1;
+            else
+                r = mid - 1;
+        }
+        return l;
+    }
+}
+```
