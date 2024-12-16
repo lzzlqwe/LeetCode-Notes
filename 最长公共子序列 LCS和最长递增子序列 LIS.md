@@ -207,3 +207,36 @@ class Solution {
     }
 }
 ```
+
+## [3.无矛盾的最佳球队](https://leetcode.cn/problems/best-team-with-no-conflicts/description/)
+思路：按照官方题解的思路。首先对队员进行排序（分数从低到高，分数相同则按照年龄从低到高）。然后用dp[i]表示以第i个学生结尾的最高分数，则状态转移方程：dp[i] = peoples[i][0] + max{dp[j]} (j < i, peoples[j][1]<=peoples[i][1])   
+代码：
+```
+class Solution {
+    public int bestTeamScore(int[] scores, int[] ages) {
+        int n = scores.length;
+        int[][] peoples = new int[n][2];
+        for(int i = 0; i < n; i++)
+        {
+            peoples[i][0] = scores[i];
+            peoples[i][1] = ages[i];
+        }
+        //排序，分数从低到高，分数相同则按照年龄从低到高
+        Arrays.sort(peoples, (p1, p2) -> p1[0] != p2[0] ? p1[0] - p2[0]: p1[1] - p2[1]);
+        int[] dp = new int[n]; //dp[i]表示以第i个学生结尾的最高分数
+        //状态转移方程 dp[i] = peoples[i][0] + max{dp[j]} (j < i, peoples[j][1]<=peoples[i][1])
+        for(int i = 0; i < n; i++)
+        {
+            int max = 0;
+            for(int j = 0; j < i; j++)
+                if(peoples[j][1] <= peoples[i][1]) max = Math.max(dp[j], max);
+            dp[i] = max + peoples[i][0];
+        }
+        //找出dp数组中的最大值
+        int ans = 0;
+        for(int x : dp)
+            ans = Math.max(x, ans);
+        return ans;
+    }
+}
+```
