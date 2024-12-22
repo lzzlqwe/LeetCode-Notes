@@ -21,3 +21,26 @@ class Solution {
     }
 }
 ```
+
+## [2.买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
+思路：和上一题思路类似，但需要修改一下状态转移方程。 dp[i][1] = Math.max(dp[i-1][1], dp[i-2][0] - prices)（若买入股票，则考虑前两天未持股的状态！！！ ）   
+代码：
+```
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int[][] dp = new int[n+1][2]; //dp[i][0]表示第i天后不持有股票的最大利润，dp[i][1]则表示持有股票
+        dp[0][0] = 0;
+        dp[0][1] = -Integer.MIN_VALUE; //初始化
+        //状态转移方程为
+        //dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] + prices); 
+        //dp[i][1] = Math.max(dp[i-1][1], dp[i-2][0] - prices); //若买入股票，则考虑前两天未持股的状态！！！
+        for(int i = 1; i <= n; i++){
+            dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] + prices[i-1]);
+            if(i == 1) dp[i][1] = - prices[i-1]; //直接计算持有股第一天结束后的最大利润
+            else dp[i][1] = Math.max(dp[i-1][1], dp[i-2][0] - prices[i-1]);
+        }
+        return dp[n][0]; //第n天后的最大利润，肯定不持有股票
+    }
+}
+```
