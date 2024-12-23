@@ -44,3 +44,31 @@ class Solution {
     }
 }
 ```
+
+## [3.买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/description/)
+思路：dp[i][j][0]表示第i天结束，未持股，最多完成j笔交易情况下的最大利润。dp[i][j][1]则表示持股情况下。状态转移方程为 未持股：dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1] + price) 不动或者购入股票。持股：dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0] - price) 不动或者出售股票   
+代码：
+```
+class Solution {
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        //dp[i][j][0]表示第i天结束，未持股，最多完成j笔交易情况下的最大利润。dp[i][j][1]表示持股
+        int[][][] dp = new int[n+1][k+1][2];
+        //初始化
+        for(int j = 0; j <= k; j++) dp[0][j][0] = 0;
+        for(int i = 0; i <= n; i++) dp[i][0][0] = 0;
+        for(int j = 0; j <= k; j++) dp[0][j][1] = -Integer.MIN_VALUE;
+        for(int i = 0; i <= n; i++) dp[i][0][1] = -Integer.MIN_VALUE;
+        //状态转移方程
+        //未持股 dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1] + price) 不动或者购入股票
+        //持股 dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0] - price) 不动或者出售股票
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= k; j++){
+                dp[i][j][0] = Math.max(dp[i-1][j][0], dp[i-1][j][1] + prices[i-1]);
+                dp[i][j][1] = Math.max(dp[i-1][j][1], dp[i-1][j-1][0] - prices[i-1]);
+            }
+        }
+        return dp[n][k][0];
+    }
+}
+```
