@@ -57,8 +57,8 @@ class Solution {
         //初始化
         for(int j = 0; j <= k; j++) dp[0][j][0] = 0;
         for(int i = 0; i <= n; i++) dp[i][0][0] = 0;
-        for(int j = 0; j <= k; j++) dp[0][j][1] = -Integer.MIN_VALUE;
-        for(int i = 0; i <= n; i++) dp[i][0][1] = -Integer.MIN_VALUE;
+        for(int j = 0; j <= k; j++) dp[0][j][1] = Integer.MIN_VALUE;
+        for(int i = 0; i <= n; i++) dp[i][0][1] = Integer.MIN_VALUE;
         //状态转移方程
         //未持股 dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1] + price) 不动或者购入股票
         //持股 dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0] - price) 不动或者出售股票
