@@ -94,3 +94,47 @@ class Solution {
     }
 }
 ```
+
+## [5.将三个组排序](https://leetcode.cn/problems/sorting-three-groups/description/)
+思路：求出最长非递减子序列的长度len，用总长度减去len即可。  
+代码：
+```
+class Solution {
+    public int minimumOperations(List<Integer> nums) {
+        int n = nums.size();
+        int[] d = new int[n+1];
+        int len = 1;
+        d[len] = nums.get(0);
+        for(int i = 1; i < n; i++)
+        {
+            if(nums.get(i) >= d[len])
+            {
+                len++;
+                d[len] = nums.get(i);
+            }
+            else
+            {
+                int idx = lower_bound(d, 1, len, nums.get(i));
+                while(d[idx] == nums.get(i)) //因为idx应该指向d数组中相同元素的最后 
+                    idx++;
+                d[idx] = nums.get(i);
+            }
+        }
+        return n - len;
+    }
+
+    //二分查找
+    public int lower_bound(int[] nums, int left, int right, int target){
+        int l = left;
+        int r = right;
+        while(l <= r){
+            int mid = l + (r - l) / 2;
+            if(nums[mid] < target)
+                l = mid + 1;
+            else
+                r = mid - 1;
+        }
+        return l;
+    }
+}
+```
