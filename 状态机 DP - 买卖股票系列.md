@@ -138,3 +138,37 @@ class Solution {
     }
 }
 ```
+
+## [6.访问数组中的位置使分数最大](https://leetcode.cn/problems/visit-array-positions-to-maximize-score/description/)
+思路：详见代码注解或者官方题解。  
+代码：
+```
+class Solution {
+    public long maxScore(int[] nums, int x) {
+        int n = nums.length;
+        long[] scores = new long[n]; //scores[i]表示最后移动到位置i的最大得分
+        scores[0] = nums[0]; //一开始的分数为 nums[0] 
+        //dp[0]表示之前位置中最后移动的元素为偶数时得分的最大值
+        //dp[1]表示之前位置中最后移动的元素为奇数时得分的最大值
+        long[] dp = new long[]{Integer.MIN_VALUE, Integer.MIN_VALUE};
+        //初始化dp 
+        dp[nums[0] % 2] = nums[0];
+        long ans = scores[0]; //记录答案
+        //依次遍历数组，计算最后移动到位置i的最大得分
+        for(int i = 1; i < n; i++){
+            if(nums[i] % 2 == 0) //当前位置为偶数
+            {
+                scores[i] = Math.max(dp[0] + nums[i], dp[1] + nums[i] - x);
+                dp[0] = scores[i]; //更新之前位置中最后移动的元素为偶数时得分的最大值
+            }
+            else //当前位置为奇数
+            {
+                scores[i] = Math.max(dp[1] + nums[i], dp[0] + nums[i] - x);
+                dp[1] = scores[i]; //更新之前位置中最后移动的元素为奇数时得分的最大值
+            }
+            ans = Math.max(ans, scores[i]);//更新答案
+        }
+        return ans;
+    }
+}
+```
