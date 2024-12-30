@@ -24,3 +24,27 @@ class Solution {
     }
 }
 ```
+## [2.多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/description/)
+思路：dp[i][j]表示顶点i顺时针到顶点j + 边j-i 围成的多边形最低分。状态转移方程: dp[i]][j] = min_(i < k < j){dp[i][k] + dp[k][j] + v[i]*v[k]*v[j]}。   
+代码：
+```
+class Solution {
+    public int minScoreTriangulation(int[] values) {
+        int n = values.length;
+        int[][] dp = new int[n][n]; //dp[i][j]表示顶点i顺时针到顶点j + 边j-i 围成的多边形最低分。
+        //状态转移方程:
+        //dp[i]][j] = min_(i < k < j){dp[i][k] + dp[k][j] + v[i]*v[k]*v[j]}
+        for(int i = n-2; i >= 0; i--){ //i从倒数第二个点开始。
+            dp[i][i+1] = 0; //只有一条边，低分为0
+            for(int j = i+2; j < n; j++){
+                dp[i][j] = Integer.MAX_VALUE;
+                for(int k = i+1; k < j; k++){
+                    dp[i][j] = 
+                    Math.min(dp[i][k] + dp[k][j] + values[i]*values[k]*values[j], dp[i][j]);
+                }
+            }
+        }
+        return dp[0][n-1];
+    }
+}
+```
