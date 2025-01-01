@@ -24,6 +24,7 @@ class Solution {
     }
 }
 ```
+
 ## [2.多边形三角剖分的最低得分](https://leetcode.cn/problems/minimum-score-triangulation-of-polygon/description/)
 思路：dp[i][j]表示顶点i顺时针到顶点j + 边j-i 围成的多边形最低分。状态转移方程: dp[i]][j] = min_(i < k < j){dp[i][k] + dp[k][j] + v[i]*v[k]*v[j]}。   
 代码：
@@ -42,6 +43,40 @@ class Solution {
                     dp[i][j] = 
                     Math.min(dp[i][k] + dp[k][j] + values[i]*values[k]*values[j], dp[i][j]);
                 }
+            }
+        }
+        return dp[0][n-1];
+    }
+}
+```
+
+## [3.相同分数的最大操作数目 II](https://leetcode.cn/problems/maximum-number-of-operations-with-the-same-score-ii/description/)
+思路：dp[i][j]表示下标i到j的最多可操作次数。状态转移方程dp[i][j] = max(dp[i+2][j], dp[i][j-2], dp[i+1][j-1]) + 1 (各个操作需要满足删除的元素和为target)   
+代码：
+```
+class Solution {
+    public int maxOperations(int[] nums) {
+        int n = nums.length;
+        int res1 = dpResolve(nums, nums[0]+nums[1]);
+        int res2 = dpResolve(nums, nums[n-2]+nums[n-1]);
+        int res3 = dpResolve(nums, nums[0]+nums[n-1]);
+        return Math.max(res1, Math.max(res2, res3));
+    }
+
+    public int dpResolve(int[] nums, int target){
+        int n = nums.length;
+        int[][] dp = new int[n][n]; //dp[i][j]表示下标i到j的最多可操作次数
+        //状态转移方程dp[i][j] = max(dp[i+2][j], dp[i][j-2], dp[i+1][j-1]) + 1
+        //(各个操作需要满足删除的元素和为target)
+        for(int i = n-2; i >= 0; i--){
+            if(nums[i] + nums[i+1] == target) dp[i][i+1] = 1;
+            for(int j = i+2; j < n; j++){
+                if(nums[i] + nums[i+1] == target) 
+                    dp[i][j] = Math.max(dp[i+2][j] + 1, dp[i][j]);
+                if(nums[j] + nums[j-1] == target) 
+                    dp[i][j] = Math.max(dp[i][j-2] + 1, dp[i][j]);
+                if(nums[i] + nums[j] == target) 
+                    dp[i][j] = Math.max(dp[i+1][j-1] + 1, dp[i][j]);
             }
         }
         return dp[0][n-1];
