@@ -83,3 +83,33 @@ class Solution {
     }
 }
 ```
+
+## [4.切棍子的最小成本](https://leetcode.cn/problems/minimum-cost-to-cut-a-stick/description/)
+思路：注意这题的区间表示和前面题目略微有点不同。dp[i][j]表示切开索引i到j的切棍子最小总成本。状态转移方程 dp[i][j] = min_{k为中间切开索引}(dp[i][k] + dp[k][j]) + (cut[j] - cut[i])  
+代码：
+```
+class Solution {
+    public int minCost(int n, int[] cuts) {
+        //预处理操作
+        int[] new_cuts = new int[cuts.length+2];
+        for(int i = 0; i < cuts.length; i++)
+            new_cuts[i+1] = cuts[i];
+        new_cuts[0] = 0;
+        new_cuts[new_cuts.length-1] = n;
+        Arrays.sort(new_cuts);
+        int num = new_cuts.length; 
+        int[][] dp = new int[num][num]; //dp[i][j]表示切开索引i到j的切棍子最小总成本
+        //状态转移方程 dp[i][j] = min_{k为中间切开索引}(dp[i][k] + dp[k][j]) + (cut[j] - cut[i])
+        for(int i = num-2; i >= 0; i--){
+            for(int j = i+1; j < num; j++){
+                for(int k = i+1; k < j; k++){ //查找k满足: i < k < j
+                    int length = new_cuts[j] - new_cuts[i];
+                    if(k == i+1) dp[i][j] = dp[i][k] + dp[k][j] + length;
+                    else dp[i][j] = Math.min(dp[i][k] + dp[k][j] + length, dp[i][j]);
+                }
+            }
+        }
+        return dp[0][num-1];
+    }
+}
+```
