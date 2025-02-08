@@ -24,3 +24,28 @@ class Solution {
     }
 }
 ```
+
+## [2.二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/description/)
+思路：每次返回当前子树的最大链和v，若v小于0则返回0。遍历每个节点时顺带更新答案ans=max(ans, node.val + leftv + rightv).  
+代码：
+```
+class Solution {
+
+    public int ans = Integer.MIN_VALUE;
+
+    public int maxPathSum(TreeNode root) {
+        dfs(root);
+        return ans;
+    }
+
+    public int dfs(TreeNode node){
+        if(node == null){
+            return 0;
+        }
+        int leftVal = dfs(node.left);
+        int rightVal = dfs(node.right);
+        ans = Math.max(node.val + leftVal + rightVal, ans); //更新答案
+        return Math.max(Math.max(node.val + leftVal, node.val + rightVal), 0);
+    }
+}
+```
