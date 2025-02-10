@@ -49,3 +49,33 @@ class Solution {
     }
 }
 ```
+
+# 树形 DP - 最大独立集
+
+## [1.打家劫舍 III](https://leetcode.cn/problems/house-robber-iii/description/)
+思路：  
+![image](https://github.com/user-attachments/assets/0f432337-a910-4b4c-bf15-2c6d7a440a30)
+  
+代码：  
+```
+class Solution {
+    public int rob(TreeNode root) {
+        int[] ans = dfs(root);
+        return Math.max(ans[0], ans[1]);
+    }
+
+    //当前节点有选和不选两种状态
+    //返回两种状态(选，不选)下，当前树的最大值
+    int[] dfs(TreeNode node){
+        if(node == null)
+            return new int[] {0, 0};
+        int[] leftVal = dfs(node.left);
+        int[] rightVal = dfs(node.right);
+        int[] nodeVal = new int[2];
+        nodeVal[0] = node.val + leftVal[1] + rightVal[1]; //选择当前节点
+        nodeVal[1] = Math.max(leftVal[0], leftVal[1]) + 
+                        Math.max(rightVal[0], rightVal[1]); //不选择当前节点
+        return nodeVal;
+    }
+}
+```
