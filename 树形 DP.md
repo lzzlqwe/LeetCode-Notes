@@ -79,3 +79,40 @@ class Solution {
     }
 }
 ```
+
+
+# 树形 DP - 最小支配集
+
+## [1.监控二叉树](https://leetcode.cn/problems/binary-tree-cameras/description/)
+思路：详见[灵神视频](https://www.bilibili.com/video/BV1oF411U7qL/?vd_source=1b49919c7c0227f4fcf55e85034bd317)或者代码注释.  
+
+代码：  
+```
+class Solution {
+    public int minCameraCover(TreeNode root) {
+        int[] ans = dfs(root);
+        return Math.min(ans[0], ans[2]);
+    }
+
+    //返回当前节点[蓝色，黄色，红色]状态下的最小摄像头次数
+    //蓝色表示当前节点有摄像头
+    //黄色表示父节点有摄像头
+    //红色表示至少有一个子节点有摄像头
+    public int[] dfs(TreeNode node){
+        if(node == null)
+            return new int[] {1001, 0, 0};
+        int[] leftVal = dfs(node.left);
+        int[] rightVal = dfs(node.right);
+        int[] nodeVal = new int[3];
+        //蓝色状态
+        nodeVal[0] =  Math.min(Math.min(leftVal[0], leftVal[1]), leftVal[2])
+         + Math.min(Math.min(rightVal[0], rightVal[1]), rightVal[2]) + 1;
+        //黄色状态
+        nodeVal[1] = Math.min(leftVal[0], leftVal[2]) + Math.min(rightVal[0], rightVal[2]);
+        //红色状态
+        nodeVal[2] = Math.min(Math.min(leftVal[0] + rightVal[0], leftVal[0] + rightVal[2]),
+                                    leftVal[2] + rightVal[0]);
+        return nodeVal;
+    }
+}
+```
