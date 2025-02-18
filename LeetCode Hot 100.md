@@ -52,7 +52,7 @@ class Solution {
 # 双指针
 
 ## [1.移动零](https://leetcode.cn/problems/move-zeroes/description/)
-思路：使用双指针，左指针始终指向第一个0， 右指针指向left后的非零元素，进行元素交换后，双指针继续向后移动。  
+思路：使用双指针，左指针始终指向第一个0， 右指针指向left后的第一个非零元素（其中left到right-1都为0），进行元素交换后，双指针继续向后移动。  
 代码：
 ```
 class Solution {
