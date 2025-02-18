@@ -48,3 +48,31 @@ class Solution {
     }
 }
 ```
+
+# 双指针
+
+## [1.移动零](https://leetcode.cn/problems/move-zeroes/description/)
+思路：使用双指针，左指针始终指向第一个0， 右指针指向left后的非零元素，进行元素交换后，双指针继续向后移动。  
+代码：
+```
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n = nums.length;
+        int left = 0; //始终指向第一个0
+        while(left < n && nums[left] != 0)
+            left++;
+        int right = left; //指向left后的非零元素
+        while(right < n && nums[right] == 0)
+            right++;
+        while(right < n){
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            while(right < n && nums[right] == 0)
+                right++;
+            while(left < n && nums[left] != 0)
+                left++;
+        }
+    }
+}
+```
