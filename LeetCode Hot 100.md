@@ -76,3 +76,24 @@ class Solution {
     }
 }
 ```
+
+## [2.盛最多水的容器](https://leetcode.cn/problems/container-with-most-water/description/)
+思路：定义两个指针left和right，left从最左边开始，right从最右边开始，每次移动最矮的那条边（因为移动最矮边才可能在中间找到最优解），并记录储存的最大水量。  
+代码：
+```
+class Solution {
+    public int maxArea(int[] height) {
+        int ans = 0;
+        int left = 0;
+        int right = height.length - 1;
+        while(left < right){
+            int s = (right - left) * Math.min(height[left], height[right]);
+            ans = Math.max(ans, s);
+            if(height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+        return ans;
+    }
+}
