@@ -135,3 +135,33 @@ class Solution {
     }
 }
 ```
+
+## [4.接雨水](https://leetcode.cn/problems/trapping-rain-water/description/)
+思路：定义两个数组，前缀数组记录从左边到下标i的最大高度，后缀数组记录从右边到下标i的最大高度，有了这两个数组就可以计算各个下标i的盛水单位量。  
+代码：
+```
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        int[] pre = new int[n];
+        int[] post = new int[n];
+        //求前缀数组和后缀数组
+        int max = 0;
+        for(int i = 0; i < n; i++){
+            max = Math.max(max, height[i]);
+            pre[i] = max;
+        }
+        max = 0;
+        for(int i = n-1; i >= 0; i--){
+            max = Math.max(max, height[i]);
+            post[i] = max;
+        }
+        //根据前缀数组和后缀数组求答案
+        int ans = 0;
+        for(int i = 0; i < n; i++){
+            ans += Math.min(pre[i], post[i]) - height[i];
+        }
+        return ans;
+    }
+}
+```
