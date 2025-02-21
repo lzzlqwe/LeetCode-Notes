@@ -212,3 +212,40 @@ class Solution {
     }
 }
 ```
+
+## [2.找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/)
+思路：首先统计字符串p的各个字母出现的次数，然后套用滑动窗口模板，统计滑动窗口中各字符的次数，如果滑动窗口中当前字符的次数大于字符串p的字符次数，则移动滑动窗口左边。当滑动窗口的长度等于字符串p的长度时，即找到一个答案。之后继续查找。  
+代码：
+```
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        //统计字符串p的各个字母出现的次数
+        char[] p_mp = new char[26];
+        char[] pArr = p.toCharArray();
+        for(char c : pArr){
+            p_mp[c-'a']++;
+        }
+        //找到异位词
+        char[] s_mp = new char[26];
+        int left = 0;
+        int right = 0;
+        char[] sArr = s.toCharArray();
+        int n = sArr.length;
+        while(right < n){
+            char c = sArr[right]; //考虑当前字符
+            // s_mp.merge(c, 1, Integer::sum); 
+            s_mp[c-'a']++; //添加到hashmap
+            //如果滑动窗口中当前字符的次数大于字符串p的字符次数，则移动滑动窗口左边
+            while(left <= right && s_mp[c-'a'] > p_mp[c-'a']){ 
+                s_mp[sArr[left]-'a']--;
+                left++;
+            }
+            if(right - left + 1 == p.length()) //找到答案
+                ans.add(left);
+            right++;
+        }
+        return ans;
+    }
+}
+```
