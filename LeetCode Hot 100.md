@@ -165,3 +165,32 @@ class Solution {
     }
 }
 ```
+
+# 滑动窗口
+
+## [1.无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
+思路：套用滑动窗口模板  
+代码：
+```
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        Set<Character> set = new HashSet<>();
+        char[] strArr = s.toCharArray();
+        int n = strArr.length;
+        int left = 0;
+        int right = 0;
+        int maxLength = 0;
+        while(right < n){
+            char c = strArr[right];
+            while(left <= right && set.contains(c)){
+                set.remove(strArr[left]);
+                left++;
+            }
+            set.add(c);
+            maxLength = Math.max(maxLength, right - left + 1);
+            right++;
+        }
+        return maxLength;
+    }
+}
+```
