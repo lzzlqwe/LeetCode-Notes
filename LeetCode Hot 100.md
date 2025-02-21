@@ -97,3 +97,41 @@ class Solution {
         return ans;
     }
 }
+```
+
+## [3.三数之和](https://leetcode.cn/problems/3sum/description/)
+思路：先排序，然后定义三个指针i，left和right，外层循环指针i从0遍历到倒数第三个位置（留两个位置给相向指针left和right），指针left从i+1开始，指针right从最右边开始。（如果题目要求结果不能重复，则三个指针都只指向第一个重复元素，绕过后续重复元素）  
+代码：
+```
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums); //排序
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
+        int i = 0;
+        while(i < n - 2){
+            int left = i + 1;
+            int right = n - 1;
+            while(left < right){
+                if(nums[i] + nums[left] + nums[right] == 0){
+                    ans.add(new ArrayList(Arrays.asList(nums[i], nums[left], nums[right])));
+                    left++;
+                    while(left < right && nums[left-1] == nums[left])//指向第一个重复的元素
+                        left++;
+                    right--;
+                    while(left < right && nums[right] == nums[right+1])//指向第一个重复的元素
+                        right--;
+                }
+                else if(nums[i] + nums[left] + nums[right] < 0)
+                    left++;
+                else
+                    right--;
+            }
+            i++;
+            while(i < n - 2 && nums[i-1] == nums[i]) //指向第一个重复的元素,绕过后续重复元素
+                i++;
+        }
+        return ans;
+    }
+}
+```
