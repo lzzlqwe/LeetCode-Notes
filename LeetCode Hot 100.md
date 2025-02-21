@@ -168,6 +168,24 @@ class Solution {
 
 # 滑动窗口
 
+### 模板代码
+```
+int start = 0;
+int end = 0;
+while(end < n){ //外层循环扩展右边界，内层循环扩展左边界
+    xxx;  //当前考虑的元素
+    while(start <= end && 条件){
+        xxx
+        start++; //扩展左边界
+    }
+    end++; //扩展右边界
+}
+```
+
+### 滑动窗口使用前提：  
+1. 连续子数组。
+2. 有单调性。比如元素均为正数。
+
 ## [1.无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/description/)
 思路：套用滑动窗口模板  
 代码：
