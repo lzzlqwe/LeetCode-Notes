@@ -249,3 +249,29 @@ class Solution {
     }
 }
 ```
+
+# 子串
+
+## [1.和为 K 的子数组](https://leetcode.cn/problems/subarray-sum-equals-k/description/)
+思路：前缀和pre[i]表示[0...i]的和。和为k的子数组nums[j, i]满足pre[i] - pre[j-1] = k，即pre[i] - k = pre[j-1]。因此转换思路，在for循环中，查找以i结尾的和为k的子数组个数时，只需计算前面有多少个和为pre[i] - k的子数组。  
+代码：
+```
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        //前缀和pre[i]表示[0...i]的和
+        //和为k的子数组nums[j, i]满足pre[i] - pre[j-1] = k，即pre[i] - k = pre[j-1]
+        //因此for循环，查找以i结尾的和为k的子数组个数，只需计算前面有多少个和为pre[i] - k的子数组
+        int ans = 0; //记录答案
+        int pre = 0; //记录前缀和
+        Map<Integer, Integer> mp = new HashMap<>(); //记录前缀和的出现个数
+        mp.put(0, 1); //初始化，pre[-1] = 0;
+        for(int i = 0; i < nums.length; i++){
+            pre += nums[i]; //更新前缀和
+            if(mp.containsKey(pre - k))
+                ans += mp.get(pre - k);
+            mp.merge(pre, 1, Integer::sum);
+        }
+        return ans;
+    }
+}
+```
