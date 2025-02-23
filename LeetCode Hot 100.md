@@ -275,3 +275,34 @@ class Solution {
     }
 }
 ```
+
+## [2.滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/description/)
+思路：从左到右，维护一个单调队列，队首元素就是当前滑动窗口的最大值，详见代码注释。  
+代码：
+```
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        List<Integer> dequeue = new LinkedList<>(); //单调队列
+        for(int i = 0; i < k-1; i++){ //初始维护单调队列
+            while(!dequeue.isEmpty() && nums[dequeue.getLast()] <= nums[i])
+                dequeue.removeLast();
+            dequeue.addLast(i); //存放下标而不是值
+        }
+        //移动滑动窗口得到答案
+        int n = nums.length;
+        int[] ans = new int[n-k+1];
+        for(int i = k-1; i < n; i++){
+            //维护单调队列
+            while(!dequeue.isEmpty() && nums[dequeue.getLast()] <= nums[i])
+                dequeue.removeLast();
+            dequeue.addLast(i); //存放下标而不是值
+            //检查队首是否已经超出滑动窗口了
+            while(dequeue.getFirst() < i - k + 1)
+                dequeue.removeFirst();
+            //队首元素即为当前滑动窗口最大值
+            ans[i-k+1] = nums[dequeue.getFirst()];
+        }
+        return ans;
+    }
+}
+```
