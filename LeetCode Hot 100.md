@@ -354,3 +354,36 @@ class Solution {
     }
 }
 ```
+
+# 普通数组
+
+## [1.最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
+
+思路1：套用滑动窗口模板  
+代码：
+```
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int ans = Integer.MIN_VALUE;
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        while(right < nums.length){
+            sum += nums[right];
+            ans = Math.max(sum, ans); //更新答案
+            while(left <= right && sum <= 0){
+                sum -= nums[left];
+                left++;
+            }
+            right++;
+        }
+        return ans;
+    }
+}
+```
+
+思路2：前缀和。  
+代码：
+```
+
+```
