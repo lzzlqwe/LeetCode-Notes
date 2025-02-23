@@ -306,3 +306,51 @@ class Solution {
     }
 }
 ```
+
+
+## [3.最小覆盖子串](https://leetcode.cn/problems/minimum-window-substring/description/)
+思路：属于滑动窗口专题，和滑动窗口专题的第二题很相似。虽然存在双重循环，但时间复杂度为并不是O(n^2)，而是O(C·n)，其中C是一个常数。因为这里内层循环遍历的是52个大小写字母，是固定的常数。
+代码：
+```
+class Solution {
+    public String minWindow(String s, String t) {
+        char[] t_mp = new char[128]; //t的哈希表
+        char[] tArr = t.toCharArray();
+        for(char c : tArr){
+            t_mp[c - 'A']++;
+        }
+        char[] s_mp = new char[128]; //s的哈希表
+        char[] sArr = s.toCharArray();
+        int left = 0;
+        int right = 0;
+        int n = sArr.length;
+        int[] ans = new int[]{0, 100001}; //记录最小覆盖子串的起始下标和长度
+        while(right < n){
+            char c = sArr[right]; //考虑当前字符
+            s_mp[c - 'A']++; //加入hash表
+            while(left <= right && isCover(t_mp, s_mp)){
+                if(right - left + 1 < ans[1]){ //更新并记录答案
+                    ans[0] = left;
+                    ans[1] = right - left + 1;
+                }
+                s_mp[sArr[left] - 'A']--;
+                left++;
+            }
+            right++;
+        }
+        if(ans[1] > 100000) return "";
+        else return s.substring(ans[0], ans[0]+ans[1]);
+    }
+
+    //遍历52个字母，检查当前滑动窗口是否覆盖了字符串t
+    boolean isCover(char[] t_mp, char[] s_mp){
+        for(int i = 0; i < 26; i++) //大写字母
+            if(t_mp[i] > s_mp[i])
+                return false;
+        for(int i = 0; i < 26; i++) //小写字母
+            if(t_mp[i+'a'-'A'] > s_mp[i+'a'-'A'])
+                return false;
+        return true;
+    }
+}
+```
