@@ -359,7 +359,7 @@ class Solution {
 
 ## [1.最大子数组和](https://leetcode.cn/problems/maximum-subarray/description/)
 
-思路1：套用滑动窗口模板  
+思路1：套用滑动窗口模板。  
 代码：
 ```
 class Solution {
@@ -382,8 +382,20 @@ class Solution {
 }
 ```
 
-思路2：前缀和。  
-代码：
+思路2：前缀和做法。由于子数组的元素和等于两个前缀和的差。我们可以一边遍历数组计算前缀和，一边维护前缀和的最小值，当前的前缀和减去前缀和的最小值，就得到了以当前元素结尾的子数组和的最大值，用它来更新答案的最大值。   
+代码：  
 ```
-
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int pre = 0; //记录以下标i结果的前缀和
+        int min_pre = 0; //记录i之前的最小前缀和
+        int ans = Integer.MIN_VALUE; //记录答案
+        for(int i = 0; i < nums.length; i++){
+            pre += nums[i]; //计算前缀和
+            ans = Math.max(pre - min_pre, ans); //更新答案
+            min_pre = Math.min(min_pre, pre); //更新最小前缀和
+        }
+        return ans;
+    }
+}
 ```
