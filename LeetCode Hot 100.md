@@ -399,3 +399,27 @@ class Solution {
     }
 }
 ```
+
+## [2.合并区间](https://leetcode.cn/problems/merge-intervals/description/)
+
+思路：对所有区间按照左端点从小到大进行排序。for循环，如果不相交无法合并则加入答案，如果相交可以合并则更新答案。注意List到Array数组的转换代码。  
+代码：
+```
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        List<int[]> ans = new ArrayList<>();
+        //按照区间左端点进行排序
+        Arrays.sort(intervals, (p, q)->{
+            return p[0] - q[0];
+        });
+        for(int i = 0; i < intervals.length; i++){
+            if(i != 0 && intervals[i][0] <= ans.get(ans.size()-1)[1]){// 可以合并
+                //更新右端点
+                ans.get(ans.size()-1)[1] = Math.max(intervals[i][1], ans.get(ans.size()-1)[1]);
+            }
+            else ans.add(intervals[i]); // 不相交，无法合并
+        }
+        return ans.toArray(new int[ans.size()][]);
+    }
+}
+```
