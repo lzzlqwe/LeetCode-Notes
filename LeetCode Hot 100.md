@@ -450,3 +450,29 @@ class Solution {
     }
 }
 ```
+
+## [4.除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/description/)
+
+思路：利用前缀积和后缀积即可得到答案。  
+代码：
+```
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] pre = new int[n]; //pre[i]表示i之前所有元素的前缀积
+        int[] post = new int[n]; //post[i]表示i之后所有元素的后缀积
+        //计算前缀积和后缀积
+        pre[0] = 1;
+        for(int i = 1; i < n; i++)
+            pre[i] = pre[i-1] * nums[i-1];
+        post[n-1] = 1;
+        for(int i = n-2; i >= 0; i--)
+            post[i] = post[i+1] * nums[i+1];
+        //计算答案
+        int[] ans = new int[n];
+        for(int i = 0; i < n; i++)
+            ans[i] = pre[i] * post[i];
+        return ans;
+    }
+}
+```
