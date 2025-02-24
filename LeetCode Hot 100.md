@@ -423,3 +423,30 @@ class Solution {
     }
 }
 ```
+
+## [3.轮转数组](https://leetcode.cn/problems/rotate-array/description/)
+
+思路：反转整个数组，然后反转前k个元素，最后反转剩余元素，即可得出答案。注意k取模，防止k大于n。
+代码：
+```
+class Solution {
+    public void rotate(int[] nums, int k) {
+        //一种做法是需要一个额外数组，考虑原地轮转的方法
+        int n = nums.length;
+        k = k % n; //k取模，防止k大于n
+        reverse(nums, 0, n-1); //反转整个数组
+        reverse(nums, 0, k-1); //反转前k个元素
+        reverse(nums, k, n-1); //反转剩余元素
+    }
+
+    public void reverse(int[] nums, int l, int r){ //反转特定区间内的元素
+        while(l <= r){
+            int t = nums[l];
+            nums[l] = nums[r];
+            nums[r] = t;
+            l++;
+            r--;
+        }
+    }
+}
+```
