@@ -476,3 +476,34 @@ class Solution {
     }
 }
 ```
+
+# 矩阵
+
+## [1.矩阵置零](https://leetcode.cn/problems/set-matrix-zeroes/description/)
+
+思路：我们可以用两个标记数组分别记录每一行和每一列是否有零出现。    
+代码：
+```
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int[] row = new int[matrix.length]; //记录每行是否有0
+        int[] col = new int[matrix[0].length]; //记录每列是否有0
+        //记录各行各列的0情况
+        for(int i = 0; i < row.length; i++){
+            for(int j = 0; j < col.length; j++){
+                if(matrix[i][j] == 0){
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+        //原地修改
+        for(int i = 0; i < row.length; i++){
+            for(int j = 0; j < col.length; j++){
+                if(row[i] == 1 || col[j] == 1)
+                    matrix[i][j] = 0;
+            }
+        }
+    }
+}
+```
