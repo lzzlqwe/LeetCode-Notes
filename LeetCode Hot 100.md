@@ -545,3 +545,31 @@ class Solution {
     }
 }
 ```
+
+## [3.旋转图像](https://leetcode.cn/problems/rotate-image/description/)
+
+思路：先以左对角线进行翻转，再水平翻转。   
+代码：
+```
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        //1.先以左对角线进行翻转
+        for(int i = 0; i < n; i++){
+            for(int j = i; j < n; j++){
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = t;
+            }
+        }
+        //2.再水平翻转
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n/2; j++){
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[i][n-1-j];
+                matrix[i][n-1-j] = t;
+            }
+        }
+    }
+}
+```
