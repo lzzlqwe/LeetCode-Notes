@@ -507,3 +507,41 @@ class Solution {
     }
 }
 ```
+
+## [2.螺旋矩阵](https://leetcode.cn/problems/spiral-matrix/description/)
+
+思路：定义“右下左上”四个方向，初始为右方向，一直走，直到越界或者格子已访问，则转换下一个方向，重复此过程。 当走过所有格子则结束。   
+代码：
+```
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};//右下左上
+        int curDir = 0; //当前方向
+        int row = matrix.length;
+        int col = matrix[0].length;
+        List<Integer> ans = new ArrayList<>();//答案
+        int curX = 0; //当前坐标
+        int curY = 0; //当前坐标
+        int nums = 0; //表示走过的格子数
+        ans.add(matrix[curX][curY]);//记录答案
+        matrix[curX][curY] = 101; //标记当前位置已经走过
+        nums++;
+        while(nums < row * col){ //判断是否走完所有格子
+            int nextX = curX + dir[curDir][0];
+            int nextY = curY + dir[curDir][1];
+            //判断下一个位置是否越界或者已经访问过了
+            if(nextX < 0 || nextX >= row || nextY < 0 || nextY >= col || matrix[nextX][nextY] > 100){
+                curDir = (curDir + 1) % 4; //修改方向
+                nextX = curX + dir[curDir][0]; //重新走下一步
+                nextY = curY + dir[curDir][1];
+            }
+            curX = nextX;
+            curY = nextY;
+            ans.add(matrix[curX][curY]);//记录答案
+            matrix[curX][curY] = 101; //标记当前位置已经走过
+            nums++;
+        }
+        return ans;
+    }
+}
+```
