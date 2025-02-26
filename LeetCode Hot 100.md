@@ -576,7 +576,7 @@ class Solution {
 
 ## [4.搜索二维矩阵 II](https://leetcode.cn/problems/search-a-2d-matrix-ii/description/)
 
-思路：右上角元素是二叉搜索树。还有一种思路对每行进行二分查找。   
+思路：右上角元素是二叉搜索树（灵神）。还有一种思路对每行进行二分查找。   
 代码：
 ```
 class Solution {
