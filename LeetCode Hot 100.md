@@ -620,3 +620,23 @@ public class Solution {
     }
 }
 ```
+
+## [2.反转链表](https://leetcode.cn/problems/reverse-linked-list/description/)
+思路：反转链表经典模板。使用两个指针pre和cur，反转结束后，从原来的链表上看，pre指向最末尾节点，cur指向后续的下一个节点，为null。  
+代码：
+```
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode cur = head;
+        ListNode pre = null;
+        while(cur != null)
+        {
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        return pre;
+    }
+}
+```
