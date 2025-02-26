@@ -598,3 +598,25 @@ class Solution {
     }
 }
 ```
+
+# 链表
+
+## [1.相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/description/)
+
+思路：设a链表长为x+z，b链表长为y+z，其中z是公共链部分。a走完x+z再走y，b走完y+z再走x，如果两个链表相交，则会刚好相遇。      
+代码：
+```
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        while(p1 != p2){
+            if(p1 != null) p1 = p1.next;
+            else p1 = headB;
+            if(p2 != null) p2 = p2.next;
+            else p2 = headA;
+        }
+        return p1;
+    }
+}
+```
