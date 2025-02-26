@@ -573,3 +573,28 @@ class Solution {
     }
 }
 ```
+
+## [4.搜索二维矩阵 II](https://leetcode.cn/problems/search-a-2d-matrix-ii/description/)
+
+思路：右上角元素是二叉搜索树。还有一种思路对每行进行二分查找。   
+代码：
+```
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        //右上角元素是二叉搜索树
+        int x = 0;
+        int y = n - 1;
+        while(x < m && y >= 0){
+            if(matrix[x][y] == target)
+                return true;
+            else if(matrix[x][y] > target) //左子树
+                y--;
+            else //右子树
+                x++;
+        }
+        return false;
+    }
+}
+```
