@@ -782,3 +782,24 @@ class Solution {
     }
 }
 ```
+
+## [8.删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/description/)
+思路：由于可能会删除链表头部，用哨兵节点简化代码。使用前后指针left和right。right指针先走n步，然后left指针和right指针同时走，距离始终为n，直到right指针指向最后一个节点，则left指针指向倒数第n+1个节点，删除倒数第n个节点。      
+代码：
+```
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode preHead = new ListNode(0, head); //哨兵节点
+        ListNode slow = preHead;
+        ListNode fast = preHead;
+        for(int i = 0; i < n; i++) //fast指针先走n走
+            fast = fast.next;
+        while(fast.next != null){ //fast和slow指针再同时走
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next; //此时slow.next即为待删除节点，删除
+        return preHead.next;
+    }
+}
+```
