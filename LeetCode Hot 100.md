@@ -725,3 +725,33 @@ public class Solution {
     }
 }
 ```
+
+## [6.合并两个有序链表]()
+思路：空间复杂度为O(1)。设置一个哨兵节点，cur指针指向哨兵。同时有list1和list2双指针，cur每次指向双指针较小的那一个，以此类推。    
+代码：
+```
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode preHead = new ListNode(); //哨兵节点
+        ListNode cur = preHead;
+        while(list1 != null && list2 != null){
+            if(list1.val < list2.val){
+                cur.next = list1;
+                cur = cur.next;
+                list1 = list1.next;
+            }
+            else{
+                cur.next = list2;
+                cur = cur.next;
+                list2 = list2.next;
+            }
+        }
+        if(list1 == null){
+            cur.next = list2;
+        }else{
+            cur.next = list1;
+        }
+        return preHead.next;
+    }
+}
+```
