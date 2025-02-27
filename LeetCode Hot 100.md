@@ -726,7 +726,7 @@ public class Solution {
 }
 ```
 
-## [6.合并两个有序链表]()
+## [6.合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/description)
 思路：空间复杂度为O(1)。设置一个哨兵节点，cur指针指向哨兵。同时有list1和list2双指针，cur每次指向双指针较小的那一个，以此类推。    
 代码：
 ```
@@ -751,6 +751,33 @@ class Solution {
         }else{
             cur.next = list1;
         }
+        return preHead.next;
+    }
+}
+```
+
+## [7.两数相加](https://leetcode.cn/problems/add-two-numbers/description/)
+思路：创建一个哨兵节点。然后同时遍历l1和l2，直到最长链为null为止。每次遍历计算当前位和当前进位即可。    
+代码：
+```
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //哨兵节点
+        ListNode preHead = new ListNode();
+        ListNode cur = preHead;
+        int carry = 0; //保存当前进位
+        while(l1 != null || l2 != null){
+            int val1 = l1 != null ? l1.val : 0;
+            int val2 = l2 != null ? l2.val : 0;
+            int curVal = val1 + val2 + carry; //计算当前位
+            cur.next = new ListNode(curVal % 10);//更新答案
+            cur = cur.next;
+            carry = curVal / 10; //进位
+            if(l1 != null) l1 = l1.next;
+            if(l2 != null) l2 = l2.next;
+        }
+        if(carry == 1)
+            cur.next = new ListNode(1);
         return preHead.next;
     }
 }
