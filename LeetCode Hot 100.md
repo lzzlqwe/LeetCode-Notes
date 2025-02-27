@@ -698,3 +698,30 @@ public class Solution {
     }
 }
 ```
+
+## [5.环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)
+思路：  
+![image](https://github.com/user-attachments/assets/4af5834a-f78d-4eec-a66f-979847bb3022)  
+![image](https://github.com/user-attachments/assets/732720b3-6468-4103-9552-1414b62fd844)  
+
+代码：
+```
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow){ //快指针追上慢指针，存在环
+                while(head != slow){
+                    head = head.next;
+                    slow = slow.next;
+                }
+                return head; //找到开始入环的第一个节点
+            }
+        }
+        return null; //不存在环
+    }
+}
+```
