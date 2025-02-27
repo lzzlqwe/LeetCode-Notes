@@ -803,3 +803,33 @@ class Solution {
     }
 }
 ```
+
+
+## [9.两两交换链表中的节点](https://leetcode.cn/problems/swap-nodes-in-pairs/description/)
+思路：从左到右遍历，每段（长度为2）进行链表反转。      
+代码：
+```
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode preHead = new ListNode(0, head); //哨兵节点
+        ListNode preLeft = preHead; //用于连接交换后长度为2的链表
+        ListNode cur = head;
+        while(cur != null && cur.next != null){
+            //两两交换
+            ListNode pre = null;
+            ListNode post = cur; //记录交换后长度为2的链表的尾节点
+            for(int i = 0; i < 2; i++){
+                ListNode nxt = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = nxt;
+            }
+            //重新拼接
+            preLeft.next = pre;
+            post.next = cur;
+            preLeft = post;
+        }
+        return preHead.next;
+    }
+}
+```
