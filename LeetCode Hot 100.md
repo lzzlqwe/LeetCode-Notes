@@ -640,3 +640,42 @@ class Solution {
     }
 }
 ```
+
+## [3.回文链表](https://leetcode.cn/problems/palindrome-linked-list/description/)
+思路：快慢指针模板找到链表的中间节点 + 反转链表。  
+代码：
+```
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        //利用快慢指针找到链表的中间节点
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //找到中间节点，反转总链表的后半部分
+        ListNode tail = reverse(slow);
+        //检查是否为回文链表
+        while(tail != null){
+            if(head.val != tail.val)
+                return false;
+            head = head.next;
+            tail = tail.next;
+        }
+        return true;
+    }
+
+    public ListNode reverse(ListNode node){
+        ListNode pre = null;
+        ListNode cur = node;
+        while(cur != null){
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        return pre;
+    }
+}
+```
