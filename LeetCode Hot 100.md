@@ -679,3 +679,22 @@ class Solution {
     }
 }
 ```
+
+## [4.环形链表](https://leetcode.cn/problems/linked-list-cycle/description/)
+思路：快慢指针判断是否存在环。若fast指针达到结尾（使用模板判断，因为fast一次走两步），则不存在环。若存在环，则fast肯定会追上slow指针。    
+代码：
+```
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) //若存在环，快指针一定会追上慢指针
+                return true;
+        }
+        return false; //没有环
+    }
+}
+```
