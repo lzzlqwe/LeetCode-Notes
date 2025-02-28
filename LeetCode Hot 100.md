@@ -895,3 +895,55 @@ class Solution {
     }
 }
 ```
+
+## [11.排序链表](https://leetcode.cn/problems/sort-list/description)
+思路：归并排序思想，详见代码注释。       
+代码：
+```
+class Solution {
+    //归并排序(分而治之)
+    public ListNode sortList(ListNode head) {
+        if(head == null || head.next == null) //0或1个节点则有序，返回
+            return head;
+        ListNode midNode = findMidNode(head);
+        ListNode l1 = sortList(head); //排序前半部分
+        ListNode l2 = sortList(midNode); //排序后半部分
+        return merge(l1, l2); //合并两个有序链表
+    }
+
+    //快慢指针找到中间节点，并将链表分为前后两半
+    public ListNode findMidNode(ListNode head){
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode slowPre = null;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slowPre = slow;
+            slow = slow.next;
+        }
+        slowPre.next = null; //中间节点的前缀节点的next指向null
+        return slow;
+    }
+
+    //合并两个有序链表
+    public ListNode merge(ListNode l1, ListNode l2){
+        ListNode preHead = new ListNode(0); //哨兵节点
+        ListNode cur = preHead;
+        while(l1 != null && l2 != null){
+            if(l1.val < l2.val){
+                cur.next = l1;
+                l1 = l1.next;
+            }else{
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+        if(l1 == null)
+            cur.next = l2;
+        else
+            cur.next = l1;
+        return preHead.next;
+    }
+}
+```
