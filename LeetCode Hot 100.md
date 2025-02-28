@@ -833,3 +833,29 @@ class Solution {
     }
 }
 ```
+
+## [10.随机链表的复制](https://leetcode.cn/problems/copy-list-with-random-pointer/description)
+思路：可以遍历两次链表：第一次是为了创建所有节点并存储在哈希表中；第二次则是为了设置这些新节点的 next 和 random 指针。      
+代码：
+```
+class Solution {
+    public Node copyRandomList(Node head) {
+        Map<Node, Node> mp = new HashMap<>();//存放新老链表的映射
+        Node cur = head;
+        //准备工作
+        while(cur != null){
+            mp.put(cur, new Node(cur.val)); //复制新节点，并和老节点对应
+            cur = cur.next;
+        }
+        //深拷贝
+        cur = head;
+        while(cur != null){
+            Node new_cur = mp.get(cur);
+            if(cur.next != null) new_cur.next = mp.get(cur.next);
+            if(cur.random != null) new_cur.random = mp.get(cur.random);
+            cur = cur.next;
+        }
+        return mp.get(head);
+    }
+}
+```
