@@ -947,3 +947,93 @@ class Solution {
     }
 }
 ```
+
+
+## [12.LRU 缓存](https://leetcode.cn/problems/lru-cache/description/)
+思路：使用双向链表（有一个哨兵节点来简化操作）来模拟LRU缓存。每次新增节点时，则将其插入到哨兵节点之后（表示最近访问，若超出容量则删除双向链表最后一个节点）；更新或者查询节点时，则将原先节点移到哨兵节点之后（表示最近访问）。详见代码注释。       
+代码：
+```
+class LRUCache {
+
+    class Node { //存放的节点
+        int key, value;
+        Node pre, next;
+
+        public Node(){
+            this.key = -1;
+            this.value = -1;
+            this.pre = null;
+            this.next = null;
+        }
+        public Node(int key, int value, Node pre, Node next){
+            this.key = key;
+            this.value = value;
+            this.pre = pre;
+            this.next = next;
+        }
+    }
+
+    int capacity; //容量
+    int nums; //当前LRU缓存数
+    Map<Integer, Node> mp = new HashMap<>(); //用于快速找到key对应的节点
+    Node preHead;//哨兵节点，LRU缓存用双向链表模拟
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.nums = 0;
+        preHead = new Node(); //初始化双向链表
+        preHead.pre = preHead;
+        preHead.next = preHead;
+    }
+    
+    public int get(int key) {
+        //首先判断LRU是否有该key
+        if(mp.containsKey(key)){
+            Node node = mp.get(key); //获得查询节点
+            //删除该节点
+            node.pre.next = node.next;
+            node.next.pre = node.pre;
+            //将该节点移动到哨兵结点之后，表示最新访问
+            node.next = preHead.next;
+            node.pre = preHead;
+            preHead.next.pre = node;
+            preHead.next = node;
+            return node.value;
+        }
+        else    
+            return -1;
+    }
+    
+    public void put(int key, int value) {
+        //首先判断LRU是否有该key
+        if(mp.containsKey(key)){ //如果关键字 key 已经存在
+            Node node = mp.get(key);
+            node.value = value; //则变更其数据值 value
+            //删除该节点
+            node.pre.next = node.next;
+            node.next.pre = node.pre;
+            //将该节点移动到哨兵结点之后，表示最新访问
+            node.next = preHead.next;
+            node.pre = preHead;
+            preHead.next.pre = node;
+            preHead.next = node;
+        }else{
+            //新节点插入到哨兵结点之后
+            Node newNode = new Node(key, value, preHead, preHead.next); 
+            preHead.next.pre = newNode;
+            preHead.next = newNode;
+            mp.put(key, newNode);
+            nums++;
+            //检查容量
+            if(nums > capacity){
+                //删除双向链表最后一个节点
+                Node delNode = preHead.pre;
+                delNode.pre.next = preHead;
+                preHead.pre = delNode.pre;
+                nums--;
+                mp.remove(delNode.key);
+            }
+        }
+    }
+}
+```
