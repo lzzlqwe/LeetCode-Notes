@@ -835,7 +835,7 @@ class Solution {
 ```
 
 ## [10.随机链表的复制](https://leetcode.cn/problems/copy-list-with-random-pointer/description)
-思路：可以遍历两次链表：第一次是为了创建所有节点并存储在哈希表中；第二次则是为了设置这些新节点的 next 和 random 指针。      
+思路1：可以遍历两次链表：第一次是为了创建所有节点并存储在哈希表中；第二次则是为了设置这些新节点的 next 和 random 指针。（空间复杂度为O(n)）      
 代码：
 ```
 class Solution {
@@ -856,6 +856,42 @@ class Solution {
             cur = cur.next;
         }
         return mp.get(head);
+    }
+}
+```
+
+思路2：生成交错链表，老->新->老->新...，然后遍历交错链表，复制新节点的random，最后遍历交错链表，拆分出新链表和老链表。（空间复杂度为O(1)）   
+代码：
+```
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null) return null;
+        Node cur = head;
+        //生成交错链表，老->新->老->新...
+        while(cur != null){
+            Node new_node = new Node(cur.val);//创建新节点
+            new_node.next = cur.next; //插入新节点
+            cur.next = new_node;
+            cur = cur.next.next;
+        }
+        //遍历交错链表，复制新节点的random
+        cur = head;
+        while(cur != null){
+            Node new_node = cur.next;
+            if(cur.random != null) new_node.random = cur.random.next;
+            cur = cur.next.next;
+        }
+        //遍历交错链表，拆分出新链表和老链表（答案会检测老链表是否被修改）
+        cur = head;
+        Node preAns = new Node(0); //答案的哨兵节点
+        Node curCopy = preAns;
+        while(cur != null){
+            curCopy.next = cur.next;
+            curCopy = curCopy.next;
+            cur.next = cur.next.next;
+            cur = cur.next;
+        }
+        return preAns.next;
     }
 }
 ```
