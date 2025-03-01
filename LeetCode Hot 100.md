@@ -1038,8 +1038,46 @@ class LRUCache {
 }
 ```
 
-## [1]()
-思路：。       
+## [1.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/description/)
+思路1：递归。       
 代码：
 ```
+class Solution {
+    List<Integer> ans = new ArrayList<>();
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        dfs(root);
+        return ans;
+    }
+
+    public void dfs(TreeNode node){
+        if(node == null)
+            return;
+        dfs(node.left);
+        ans.add(node.val);
+        dfs(node.right);
+    }
+}
+```
+
+思路2：迭代，两种方式是等价的，区别在于递归的时候隐式地维护了一个栈，而我们在迭代的时候需要显式地将这个栈模拟出来，其他都相同，具体实现可以看下面的代码。。       
+代码：
+```
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        List<TreeNode> stack = new LinkedList<>(); //栈
+        while(root != null || !stack.isEmpty()){ //root表示当前节点
+            while(root != null){ //一直深入左子树
+                stack.addLast(root); //入栈
+                root = root.left;
+            }
+            root = stack.getLast(); //取出栈顶元素
+            stack.removeLast();
+            ans.add(root.val); //保存答案
+            root = root.right; //继续查找右子树
+        }
+        return ans;
+    }
+}
 ```
