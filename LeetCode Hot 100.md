@@ -1132,3 +1132,25 @@ class Solution {
     }
 }
 ```
+
+## [5.二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/description/)
+思路：树形DP。类似于求树的最大深度，求树的最大链长（最大深度-1）。遍历每个节点时，顺便计算经过当前节点的最大直径 = 左子树链长 + 右子树链长 + 2.   
+代码：
+```
+class Solution {
+    public int ans = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        maxLength(root);
+        return ans;
+    }
+
+    public int maxLength(TreeNode node){ //返回树的最大链长（最大深度-1）
+        if(node == null)
+            return -1;
+        int lLength = maxLength(node.left);
+        int rLength = maxLength(node.right);
+        ans = Math.max(ans, lLength + rLength + 2); //更新答案
+        return Math.max(lLength, rLength) + 1;
+    }
+}
+```
