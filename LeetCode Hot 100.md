@@ -1096,3 +1096,20 @@ class Solution {
     }
 }
 ```
+
+## [3.翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/description)
+思路：先递归翻转左右子树，再交换左右子树。也可以先交换左右子树，再递归翻转左右子树。       
+代码：
+```
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null)
+            return null;
+        TreeNode lTree = invertTree(root.left);//翻转后的左子树
+        TreeNode rTree = invertTree(root.right); //翻转后的右子树
+        root.left = rTree; //交换左右子树
+        root.right = lTree;
+        return root;
+    }
+}
+```
