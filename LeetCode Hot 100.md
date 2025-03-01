@@ -1113,3 +1113,22 @@ class Solution {
     }
 }
 ```
+
+## [4.对称二叉树](https://leetcode.cn/problems/symmetric-tree/)
+思路：两个子树是否轴对称 = 根节点是否相等 + 左右子树是否轴对称 + 右左子树是否轴对称。      
+代码：
+```
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return dfs(root.left, root.right);
+    }
+
+    public boolean dfs(TreeNode tree1, TreeNode tree2){ //判断两棵子树是否镜像对称
+        if(tree1 == null && tree2 == null) //都为null
+            return true;
+        if(tree1 == null || tree2 == null) //有一个为null
+            return false;
+        return tree1.val == tree2.val && dfs(tree1.left, tree2.right) && dfs(tree1.right, tree2.left);
+    }
+}
+```
