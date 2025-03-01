@@ -1196,3 +1196,23 @@ class Solution {
     }
 }
 ```
+
+## [7.]()
+思路：二叉搜索树的中序遍历是升序序列，题目给定的数组是按照升序排序的有序数组，因此可以确保数组是二叉搜索树的中序遍历序列。其中一种方法是中序遍历，总是选择中间位置左边的数字作为根节点。   
+代码：
+```
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return func(nums, 0, nums.length-1);
+    }
+
+    public TreeNode func(int[] nums, int left, int right){
+        if(left > right)
+            return null;
+        int mid = (left + right) / 2;
+        TreeNode lTree = func(nums, left, mid-1);
+        TreeNode rTree = func(nums, mid+1, right);
+        return new TreeNode(nums[mid], lTree, rTree);
+    }
+}
+```
