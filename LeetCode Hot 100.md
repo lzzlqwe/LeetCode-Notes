@@ -1155,6 +1155,9 @@ class Solution {
 }
 ```
 
+
+## [6.二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)
+
 ### BFS模板
 ```
 首元素入队
@@ -1166,7 +1169,6 @@ while(队列不为空)
 }
 ```
 
-## [6.二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)
 思路：二叉树的BFS。当队列不为空时，队列的元素个数就是当前层的节点数，详见代码。     
 代码：
 ```
