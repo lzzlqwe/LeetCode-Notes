@@ -1197,7 +1197,7 @@ class Solution {
 }
 ```
 
-## [7.]()
+## [7.将有序数组转换为二叉搜索树](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/description)
 思路：二叉搜索树的中序遍历是升序序列，题目给定的数组是按照升序排序的有序数组，因此可以确保数组是二叉搜索树的中序遍历序列。其中一种方法是中序遍历，总是选择中间位置左边的数字作为根节点。   
 代码：
 ```
