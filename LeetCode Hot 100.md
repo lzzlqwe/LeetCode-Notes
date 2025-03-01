@@ -1038,6 +1038,8 @@ class LRUCache {
 }
 ```
 
+# 二叉树
+
 ## [1.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/description/)
 思路1：递归。       
 代码：
@@ -1078,6 +1080,19 @@ class Solution {
             root = root.right; //继续查找右子树
         }
         return ans;
+    }
+}
+```
+
+## [2.二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/description)
+思路：当前子树的最大深度 = max（左子树的最大深度，右子树的最大深度）+ 1。       
+代码：
+```
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
 }
 ```
