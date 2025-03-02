@@ -1405,3 +1405,33 @@ class Solution {
     }
 }
 ```
+
+
+## [14.路径总和 III](https://leetcode.cn/problems/path-sum-iii/description)
+思路：每次自顶向下寻找符合条件的路径和时，思路和前面[和为 K 的子数组](https://leetcode.cn/problems/subarray-sum-equals-k/description/)一样，区别在于需要回溯哈希表（因为当我们递归完左子树，要递归右子树时，map中还保存着左子树的数据。但递归到右子树，要计算的路径并不涉及到左子树的任何节点）。        
+代码：
+```
+class Solution {
+    public int ans = 0;
+    public Map<Long, Integer> mp = new HashMap<>();//记录前缀和的频数
+    public int pathSum(TreeNode root, int targetSum) {
+        mp.put(0L, 1); //初始化
+        dfs(root, 0, targetSum);
+        return ans;
+    }
+    
+    public void dfs(TreeNode node, long sum, int targetSum){
+        if(node == null)
+            return;
+        sum += node.val;
+        if(mp.containsKey(sum - targetSum)) //检查前面的前缀和
+            ans += mp.get(sum - targetSum);
+        mp.merge(sum, 1, Integer::sum);//记录前缀和
+        dfs(node.left, sum, targetSum);
+        dfs(node.right, sum, targetSum);
+        //回溯 mp.merge(sum, -1, Integer::sum);
+        if(mp.get(sum) > 1) mp.put(sum, mp.get(sum)-1);
+        else mp.remove(sum);
+    }
+}
+```
