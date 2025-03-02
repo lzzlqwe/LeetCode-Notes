@@ -1326,3 +1326,24 @@ class Solution {
     }
 }
 ```
+
+
+## [11.二叉树展开为链表](https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/description)
+思路：为了原地算法修改这棵树，可以采用逆向思维，从后往前构造这个树，这样可以防止从前往后构造时会丢失子树的地址。即按照右子树-左子树-根节点顺序遍历去构造（和前序遍历相反：根节点-左子树-右子树）        
+代码：
+```
+class Solution {
+    public TreeNode preHead = new TreeNode(0, null, null); //哨兵节点，用于头插法
+    //右子树-左子树-根节点（和前序遍历相反：根节点-左子树-右子树）
+    public void flatten(TreeNode root) {
+        if(root == null)
+            return;
+        flatten(root.right);
+        flatten(root.left);
+        //头插法
+        root.left = null;
+        root.right = preHead.right;
+        preHead.right = root;
+    }
+}
+```
