@@ -1347,3 +1347,33 @@ class Solution {
     }
 }
 ```
+
+
+## [12.从前序与中序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+思路：前序序列：[ 根节点, [左子树的前序遍历结果], [右子树的前序遍历结果] ]， 中序序列：[ [左子树的中序遍历结果], 根节点, [右子树的中序遍历结果] ]。      
+代码：
+```
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return preAndInBuildTree(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1);
+    }
+
+    public TreeNode preAndInBuildTree(int[] preorder, int prel, int prer, int[] inorder, int inl, int inr){
+        if(prel > prer || inl > inr)
+            return null;
+        int inRootIdx = findMid(inorder, inl, inr, preorder[prel]); //找到根节点在inorder中的下标
+        int lNum = inRootIdx - inl;//左子树节点数
+        int rNum = inr - inRootIdx; //右子树节点数
+        TreeNode lTree = preAndInBuildTree(preorder, prel+1, prel+lNum, inorder, inl, inRootIdx-1);
+        TreeNode rTree = preAndInBuildTree(preorder, prer-rNum+1, prer, inorder, inRootIdx+1, inr);
+        return new TreeNode(preorder[prel], lTree, rTree);
+    }
+
+    public int findMid(int[] nums, int inl, int inr, int x){ //返回x在nums数组的下标，可以用哈希表优化时间
+        for(int i = inl; i <= inr; i++)
+            if(nums[i] == x)
+                return i;
+        return -1;
+    }
+}
+```
