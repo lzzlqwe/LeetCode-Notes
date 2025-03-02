@@ -1243,7 +1243,18 @@ class Solution {
 思路：如果树是一个二叉搜索树,则中序遍历得到的序列是递增的。可以维护一个值pre,用于记录上一个节点的值.    
 代码：
 ```
+class Solution {
+    public long pre = Long.MIN_VALUE;
 
+    public boolean isValidBST(TreeNode root) {
+        if(root == null)
+            return true;
+        if(!isValidBST(root.left) || root.val <= pre)
+            return false;
+        pre = root.val;
+        return isValidBST(root.right);
+    }
+}
 ```
 
 ### 方法三（后序遍历）
