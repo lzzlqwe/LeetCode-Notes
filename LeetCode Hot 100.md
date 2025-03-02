@@ -1223,6 +1223,20 @@ class Solution {
 思路：每次维护一个开区间，判断当前节点值是否在该区间内。   
 代码：
 ```
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return preDfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean preDfs(TreeNode node, long left, long right) //开区间(left, right)
+    {
+        if(node == null)
+            return true;
+        return left < node.val && node.val < right && 
+                preDfs(node.left, left, node.val) && 
+                preDfs(node.right, node.val, right);
+    }
+}
 ```
 
 ### 方法二（中序遍历）
