@@ -1224,3 +1224,33 @@ class Solution {
 代码：
 ```
 ```
+
+### 方法二（中序遍历）
+思路：如果树是一个二叉搜索树,则中序遍历得到的序列是递增的。可以维护一个值pre,用于记录上一个节点的值.    
+代码：
+```
+
+```
+
+### 方法三（后序遍历）
+思路：每次返回左右子树的最大最小值区间，判断当前节点值是否符合条件.     
+代码：
+```
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return dfs(root)[0] != Long.MIN_VALUE;
+    }
+
+    public long[] dfs(TreeNode node){ //每次返回当前子树的最小和最大值
+        if(node == null)
+            return new long[]{Long.MAX_VALUE, Long.MIN_VALUE};
+        long[] lTree = dfs(node.left);
+        long[] rTree = dfs(node.right);
+        if(lTree[1] < node.val && node.val < rTree[0]) //满足二叉搜索树
+            //max和min适用于当前节点的子树至少有一个为null的情况
+            return new long[]{Math.min(lTree[0], node.val), Math.max(rTree[1], node.val)};
+        else //不满足二叉搜索树
+            return new long[]{Long.MIN_VALUE, Long.MAX_VALUE};
+    }
+}
+```
