@@ -1279,3 +1279,28 @@ class Solution {
     }
 }
 ```
+
+## [9.二叉搜索树中第 K 小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/description/)
+思路：中序遍历，见代码注释。也可以直接用kthSmallest函数做递归，返回-1表示还没找到。      
+代码：
+```
+class Solution {
+    public int n = 0; //当前找到的第n小元素
+    public int kthSmallest(TreeNode root, int k) {
+        return midDfs(root, k).val;
+    }
+
+    public TreeNode midDfs(TreeNode node, int k){
+        if(node == null)
+            return null;
+        TreeNode lTree = midDfs(node.left, k);//查找左子树
+        if(lTree != null) //左子树找到，直接返回
+            return lTree;
+        n++;
+        if(n == k) //若当前节点是第k小元素
+            return node;
+        else
+            return midDfs(node.right, k);//只会在右子树
+    }
+}
+```
