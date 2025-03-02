@@ -1377,3 +1377,31 @@ class Solution {
     }
 }
 ```
+
+## [13.二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/)
+思路：![image](https://github.com/user-attachments/assets/673ddc41-6755-4dc7-b9ef-b505546b984a)
+![image](https://github.com/user-attachments/assets/3f405ffc-df86-46cc-98b5-1c33a2f7199e)
+
+代码：
+```
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null)
+            return null;
+        if(root == p || root == q)
+            return root;
+        //首先dfs递归找到p，q节点并返回
+        TreeNode lTree = lowestCommonAncestor(root.left, p, q);
+        TreeNode rTree = lowestCommonAncestor(root.right, p, q);
+        //分类讨论返回值
+        if(lTree != null && rTree != null)// 左右都找到
+            return root; // 当前节点是最近公共祖先
+        else if(lTree == null && rTree == null)
+            return null;
+        else if(lTree != null)
+            return lTree;
+        else
+            return rTree;
+    }
+}
+```
