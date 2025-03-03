@@ -1435,3 +1435,31 @@ class Solution {
     }
 }
 ```
+
+# 回溯
+
+## [1.子集](https://leetcode.cn/problems/subsets/description/)
+思路：子集型。每个元素可选可不选，需要回溯。     
+代码：
+```
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> subsets(int[] nums) {
+        dfs(nums, new ArrayList<>(), 0);
+        return ans;
+    }
+
+    public void dfs(int[] nums, List<Integer> sub, int depth){
+        if(depth == nums.length){
+            ans.add(new ArrayList<>(sub)); //记得拷贝
+            return;
+        }
+        //选
+        sub.add(nums[depth]);
+        dfs(nums, sub, depth + 1);
+        sub.remove(sub.size()-1); //回溯
+        //不选
+        dfs(nums, sub, depth + 1);
+    }
+}
+```
