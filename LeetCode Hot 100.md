@@ -1463,3 +1463,32 @@ class Solution {
     }
 }
 ```
+
+## [2.全排列](https://leetcode.cn/problems/permutations/description/)
+思路：排列型。用一个boolean数组记录该元素是否已经被选过了。       
+代码：
+```
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        dfs(nums, new boolean[nums.length], new ArrayList<>());
+        return ans;
+    }
+
+    public void dfs(int[] nums, boolean[] isSelect, List<Integer> arr){
+        if(arr.size() == nums.length){
+            ans.add(new ArrayList<>(arr));
+            return;
+        }
+        for(int i = 0; i < nums.length; i++){
+            if(!isSelect[i]){
+                isSelect[i] = true;
+                arr.add(nums[i]);
+                dfs(nums, isSelect, arr);
+                isSelect[i] = false; //回溯
+                arr.remove(arr.size()-1);//回溯
+            }
+        }
+    }
+}
+```
