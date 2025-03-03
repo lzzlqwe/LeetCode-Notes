@@ -1492,3 +1492,39 @@ class Solution {
     }
 }
 ```
+
+## [3.电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/description/)
+思路：经典dfs题目。用char[]替代String可以显著提升时间。     
+代码
+```
+class Solution {
+    Map<Character, String> mp = new HashMap<>();
+    List<String> ans = new ArrayList<>();
+
+    public List<String> letterCombinations(String digits) {
+        if(digits.equals("")) return ans;
+        mp.put('2', "abc");
+        mp.put('3', "def");
+        mp.put('4', "ghi");
+        mp.put('5', "jkl");
+        mp.put('6', "mno");
+        mp.put('7', "pqrs");
+        mp.put('8', "tuv");
+        mp.put('9', "wxyz");
+        dfs(digits, new char[digits.length()], 0);
+        return ans;
+    }
+
+    public void dfs(String digits, char[] str, int i){
+        if(i == digits.length()){
+            ans.add(new String(str));
+            return;
+        }
+        String cur_str = mp.get(digits.charAt(i));
+        for(int j = 0; j < cur_str.length(); j++){
+            str[i] = cur_str.charAt(j);
+            dfs(digits, str, i+1);
+        }
+    }
+}
+```
