@@ -1528,3 +1528,37 @@ class Solution {
     }
 }
 ```
+
+## [4.组合总和](https://leetcode.cn/problems/combination-sum/description/)
+思路：每个元素可选（一个或者多个）可不选，需要回溯。见代码注释。       
+代码：
+```
+class Solution {
+    public List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        dfs(candidates, target, new ArrayList<>(), 0, 0);
+        return ans;
+    }
+
+    public void dfs(int[] candidates, int target, List<Integer> arr, int i, int sum){
+        if(i == candidates.length){
+            if(sum == target)
+                ans.add(new ArrayList<>(arr));
+            return;
+        }
+        //选（一个或者多个）
+        int n = (target - sum) / candidates[i];  //第i个元素最多可以选n个
+        for(int j = 0; j < n; j++){
+            arr.add(candidates[i]);
+            sum += candidates[i];
+            dfs(candidates, target, arr, i+1, sum);
+        }
+        for(int j = 0; j < n; j++){ //回溯
+            arr.remove(arr.size()-1);
+            sum -= candidates[i];
+        }
+        //不选
+        dfs(candidates, target, arr, i+1, sum);
+    }
+}
+```
