@@ -1645,3 +1645,58 @@ class Solution {
     }
 }
 ```
+
+## [7.单词搜索](https://leetcode.cn/problems/word-search/description)
+思路：经典dfs+回溯。再加两个优化，详见代码注释。     
+代码：
+```
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        int m = board.length, n = board[0].length;
+        //优化一:如果 word 的某个字母的出现次数，比 board 中的这个字母的出现次数还要多，可以直接返回 false。
+        char[] mp = new char[128];
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+                mp[board[i][j]]++;
+        char[] wordc = word.toCharArray();
+        char[] word_mp = new char[128];
+        for(char c : wordc){
+            word_mp[c]++;
+            if(word_mp[c] > mp[c]) return false;
+        }
+
+        //优化二：检查word首和尾的字符，从在borad出现次数较少的那一个开始查找会更快
+        if(mp[wordc[0]] > mp[wordc[wordc.length-1]])
+            wordc = new StringBuilder(word).reverse().toString().toCharArray();
+        
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+                if(board[i][j] == wordc[0]){
+                    char temp = board[i][j];
+                    board[i][j] = '#';
+                    if(dfs(board, wordc, i, j, 1)) return true;
+                    board[i][j] = temp;
+                }
+        return false;
+    }
+
+    public boolean dfs(char[][] board, char[] word, int x, int y, int i){
+        if(i == word.length){
+            return true;
+        }
+        int[][] dirt = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        int m = board.length, n = board[0].length;
+        for(int j = 0; j < 4; j++){
+            int next_x = x + dirt[j][0], next_y = y + dirt[j][1];
+            //next元素不越界，没被访问，满足下一个字符。不满足其中一个则剪枝。
+            if(0 <= next_x && next_x < m && 0 <= next_y && next_y < n && 
+            board[next_x][next_y] != '#' && board[next_x][next_y] == word[i]){
+                board[next_x][next_y] = '#'; //标记已访问
+                if(dfs(board, word, next_x, next_y, i + 1)) return true;//找到了
+                board[next_x][next_y] = word[i]; //回溯
+            }
+        }
+        return false;
+    }
+}
+```
