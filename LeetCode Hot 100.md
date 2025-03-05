@@ -1562,3 +1562,31 @@ class Solution {
     }
 }
 ```
+
+## [5.括号生成](https://leetcode.cn/problems/generate-parentheses/description/)
+思路：答案固定为一个长度2*n的字符串，对于每个位置i，选左括号还是不选左括号（选右括号）。当左括号数目小于n，则可以选左括号；当右括号数目小于左括号，则可以选右括号；       
+代码：
+```
+class Solution {
+    List<String> ans = new ArrayList<>();
+    public List<String> generateParenthesis(int n) {
+        dfs(new char[n * 2], 0, 0, n);
+        return ans;
+    }
+
+    public void dfs(char[] str, int left, int i, int n){
+        if(i == 2 * n){
+            ans.add(new String(str));
+            return;
+        }
+        if(left < n){ //左括号个数还没满就可以选
+            str[i] = '(';
+            dfs(str, left + 1, i + 1, n);
+        }
+        if(i - left < left){ //右括号个数只要少于左括号就可以选
+            str[i] = ')';
+            dfs(str, left, i + 1, n);
+        }
+    }
+}
+```
