@@ -1750,7 +1750,32 @@ private int lowerBound(int[] nums, int target) {
 2. 对于 >, <=, < 的其他三种情况，可以转换一下。比如 > target 可以转换为 >= target，以此类推。
 
 
-## [2.在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description)
+## [2.搜索二维矩阵](https://leetcode.cn/problems/search-a-2d-matrix/description)
+思路：整个矩阵展平其实就是一个有序数组，直接用二分查找即可。     
+代码：
+```
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = 0;
+        int right = n * m - 1;
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(matrix[mid/n][mid%n] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        if(left == n * m || matrix[left/n][left%n] != target)
+            return false;
+        else return true;
+    }
+}
+```
+
+
+## [3.在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description)
 思路：套用二分查找模板，详见代码注释。     
 代码：
 ```
