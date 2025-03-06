@@ -1748,3 +1748,35 @@ private int lowerBound(int[] nums, int target) {
 ### 注意事项
 1. 上述模板代码 lowerBound 返回的是最小的满足 nums[i] >= target 的 i（属于 >= 的情况）
 2. 对于 >, <=, < 的其他三种情况，可以转换一下。比如 > target 可以转换为 >= target，以此类推。
+
+
+## [2.在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description)
+思路：套用二分查找模板，详见代码注释。     
+代码：
+```
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int first = lowerbound(nums, target);
+        //如果数组为空，或者所有数都 < target，则返回 nums.length
+        //接着判断满足nums[i] >= target 的 i 所对应元素是否等于target
+        if(first == nums.length || nums[first] != target)
+            return new int[]{-1, -1};
+        //能找到元素第一个位置，则继续查找最后一个位置
+        int last = lowerbound(nums, target + 1);//target + 1
+        return new int[]{first, last - 1};
+    }
+
+    public int lowerbound(int[] nums, int target){
+        int left = 0;
+        int right = nums.length - 1;
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return left;
+    }
+}
+```
