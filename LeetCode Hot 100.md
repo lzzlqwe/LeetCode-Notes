@@ -1807,7 +1807,7 @@ class Solution {
 ```
 
 ## [4.搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/description)
-思路：首先寻找旋转排序数组的最小值下标（有专门的题目），然后分类讨论target处于哪一段。     
+思路：首先寻找旋转排序数组的最小值下标（ [寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/description/)），然后分类讨论target处于哪一段。     
 代码：
 ```
 class Solution {
