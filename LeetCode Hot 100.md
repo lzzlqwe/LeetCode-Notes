@@ -1805,3 +1805,46 @@ class Solution {
     }
 }
 ```
+
+## [4.搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/description)
+思路：首先寻找旋转排序数组的最小值下标（有专门的题目），然后分类讨论target处于哪一段。     
+代码：
+```
+class Solution {
+    public int search(int[] nums, int target) {
+        //第一步：寻找旋转排序数组的最小值下标
+        int n = nums.length;
+        int left = 0;
+        int right = n - 2;
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(nums[mid] < nums[n-1])
+                right = mid -1;
+            else
+                left = mid + 1;
+        }
+        int minIdx = left; //最小值的下标
+        //第二步，分类讨论target处于哪一段
+        if(target <= nums[n-1]){ //可能位于右边这段
+            int ans = lowerbound(nums, target, minIdx, n-1);
+            if(ans == n || nums[ans] != target) return -1;
+            else return ans;
+        }else{ //可能位于左边这段
+            int ans = lowerbound(nums, target, 0, minIdx-1);
+            if(ans == minIdx || nums[ans] != target) return -1;
+            else return ans;
+        }
+    }
+
+    public int lowerbound(int[] nums, int target, int left, int right){
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return left;
+    }
+}
+```
