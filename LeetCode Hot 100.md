@@ -1869,3 +1869,38 @@ class Solution {
     }
 }
 ```
+
+# 栈
+
+## [1有效的括号](https://leetcode.cn/problems/valid-parentheses/description)
+思路：维护一个栈，存放左括号。遍历到左括号则入栈，右括号则判断栈是否为空或者栈顶元素是否对应，返回false，否则配对，栈顶元素出栈。详见代码     
+代码：
+```
+class Solution {
+    public boolean isValid(String s) {
+        //判断字符串长度是否是偶数
+        char[] cArr = s.toCharArray();
+        if(cArr.length % 2 == 1)
+            return false;
+        //维护一个栈，存放左括号
+        List<Character> stack = new LinkedList<>();
+        //哈希表，存放左右括号的对应关系
+        Map<Character, Character> mp = new HashMap<>();
+        mp.put(')', '(');
+        mp.put(']', '[');
+        mp.put('}', '{');
+        //开始遍历
+        for(int i = 0; i < cArr.length; i++){
+            if(cArr[i] == '(' || cArr[i] == '[' || cArr[i] == '{'){//左括号直接入栈
+                stack.addLast(cArr[i]);
+            }else{ //右括号
+                //判断栈是否为空或者栈顶元素是否对应
+                if(stack.isEmpty()) return false;
+                if(stack.getLast() != mp.get(cArr[i])) return false;
+                stack.removeLast(); //配对，栈顶元素出栈
+            }
+        }
+        return stack.isEmpty(); //最后判断栈是否为空
+    }
+}
+```
