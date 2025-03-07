@@ -1806,8 +1806,29 @@ class Solution {
 }
 ```
 
-## [4.搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/description)
-思路：首先寻找旋转排序数组的最小值下标（ [寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/description/)），然后分类讨论target处于哪一段。     
+## [4.寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/description/)
+思路：红色背景表示 false，即最小值左侧，蓝色背景表示 true，即最小值及其右侧。根据这一定义，n-1必然是蓝色。    
+代码：
+```
+class Solution {
+    public int findMin(int[] nums) {
+        int n = nums.length;
+        int left = 0;
+        int right = n - 2;
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(nums[mid] < nums[n-1])
+                right = mid - 1;
+            else
+                left = mid + 1;
+        }
+        return nums[left];
+    }
+}
+```
+
+## [5.搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/description)
+思路：首先寻找旋转排序数组的最小值下标，然后分类讨论target处于哪一段。     
 代码：
 ```
 class Solution {
