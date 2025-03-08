@@ -1940,13 +1940,31 @@ class MinStack {
         return min_stack.getLast();
     }
 }
+```
 
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
+## [3.每日温度](https://leetcode.cn/problems/daily-temperatures/description/)
+思路：单调栈题目。从右到左，维护一个单调栈，栈顶元素就是当前元素的下一个更大值。  
+代码：
+```
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        List<Integer> stack = new LinkedList<>(); //维护一个单调栈
+        int[] ans = new int[temperatures.length];
+        for(int i = temperatures.length - 1; i >= 0; i--){
+            //维护单调栈
+            while(!stack.isEmpty() && temperatures[stack.getLast()] <= temperatures[i]){
+                stack.removeLast();
+            }
+            if(stack.isEmpty()){ //若栈为空，说明右边没有比他大的值
+                ans[i] = 0;
+                stack.addLast(i); //当前元素下标入栈
+            }
+            else{ //若栈顶不为空，则栈顶元素就是下一个更高温度
+                ans[i] = stack.getLast() - i;
+                stack.addLast(i); //当前元素下标入栈
+            }
+        }
+        return ans;
+    }
+}
 ```
