@@ -1872,7 +1872,7 @@ class Solution {
 
 # 栈
 
-## [1有效的括号](https://leetcode.cn/problems/valid-parentheses/description)
+## [1.有效的括号](https://leetcode.cn/problems/valid-parentheses/description)
 思路：维护一个栈，存放左括号。遍历到左括号则入栈，右括号则判断栈是否为空或者栈顶元素是否对应，返回false，否则配对，栈顶元素出栈。详见代码     
 代码：
 ```
@@ -1903,4 +1903,50 @@ class Solution {
         return stack.isEmpty(); //最后判断栈是否为空
     }
 }
+```
+
+## [2.最小栈](https://leetcode.cn/problems/min-stack/description)
+思路：维护两个栈，层层对应。一个是正常的栈；一个是辅助最小栈，辅助最小栈的栈顶元素表示当前正常栈的最小值。    
+代码：
+```
+class MinStack {
+
+    public List<Integer> min_stack;
+    public List<Integer> stack;
+    public MinStack() {
+        this.min_stack = new LinkedList<>(); //维护一个辅助最小栈
+        this.min_stack.addLast(Integer.MAX_VALUE); //初始化辅助最小栈
+        this.stack = new LinkedList<>(); //维护一个栈
+    }
+    
+    public void push(int val) {
+        stack.addLast(val); //入栈
+        if(min_stack.getLast() > val) //层层对应，维护辅助最小栈
+            min_stack.addLast(val);
+        else
+            min_stack.addLast(min_stack.getLast());
+    }
+    
+    public void pop() {
+        stack.removeLast();
+        min_stack.removeLast();
+    }
+    
+    public int top() {
+        return stack.getLast();
+    }
+    
+    public int getMin() {
+        return min_stack.getLast();
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
 ```
