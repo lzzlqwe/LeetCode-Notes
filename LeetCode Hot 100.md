@@ -1968,3 +1968,9 @@ class Solution {
     }
 }
 ```
+
+## [4.字符串解码](https://leetcode.cn/problems/decode-string/description)
+思路：。  
+代码：
+```
+```
