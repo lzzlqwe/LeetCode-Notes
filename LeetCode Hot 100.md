@@ -1970,7 +1970,37 @@ class Solution {
 ```
 
 ## [4.字符串解码](https://leetcode.cn/problems/decode-string/description)
-思路：。  
+思路：思路见Krahets。StringBuilder用append拼接字符串，toString转化为String  
 代码：
 ```
+class Solution {
+    public String decodeString(String s) {
+        List<String> stack_res = new LinkedList<>();
+        List<Integer> stack_mul = new LinkedList<>();
+        StringBuilder res = new StringBuilder();; //记录左括号前的子串
+        Integer mul = 0; //记录左括号前的数字
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if('0' <= c && c <= '9') //为数字
+                mul = mul * 10 + (c - '0');
+            else if('a' <= c && c <= 'z') //字母
+                res.append(c);
+            else if(c == '['){ //左括号
+                stack_mul.addLast(mul); //入栈
+                stack_res.addLast(res.toString()); //入栈
+                res = new StringBuilder(); //置0置空
+                mul = 0; //置0置空
+            }
+            else{ //右括号
+                StringBuilder temp = new StringBuilder();
+                Integer new_mul = stack_mul.removeLast();//出栈
+                for(int j = 0; j < new_mul; j++){ //拼接字符串
+                    temp.append(res);
+                }
+                res = new StringBuilder(stack_res.removeLast() + temp);
+            }
+        }
+        return res.toString();
+    }
+}
 ```
