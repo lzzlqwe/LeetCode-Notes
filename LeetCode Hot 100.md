@@ -1975,12 +1975,13 @@ class Solution {
 ```
 class Solution {
     public String decodeString(String s) {
+        char[] cArr = s.toCharArray();
         List<String> stack_res = new LinkedList<>();
         List<Integer> stack_mul = new LinkedList<>();
         StringBuilder res = new StringBuilder();; //记录左括号前的子串
         Integer mul = 0; //记录左括号前的数字
-        for(int i = 0; i < s.length(); i++){
-            char c = s.charAt(i);
+        for(int i = 0; i < cArr.length; i++){
+            char c = cArr[i];
             if('0' <= c && c <= '9') //为数字
                 mul = mul * 10 + (c - '0');
             else if('a' <= c && c <= 'z') //字母
