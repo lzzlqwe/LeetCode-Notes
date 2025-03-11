@@ -2005,3 +2005,25 @@ class Solution {
     }
 }
 ```
+
+# 贪心算法
+
+## [1.买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description)
+思路：for循环，记录截止当前买入的最低股票值，并计算在第i天卖出可以获取的最大利润。
+代码：
+```
+class Solution {
+    public int maxProfit(int[] prices) {
+        int min_value = 10001; //记录截止当前买入的最低股票值
+        int ans = 0; //可以获取的最大利润
+        //for循环在第i天卖出，查找可以获取的最大利润
+        for(int i = 0; i < prices.length; i++){
+            if(prices[i] > min_value){ //可以卖出
+                ans = Math.max(ans, prices[i] - min_value); //更新答案
+            }
+            min_value = Math.min(min_value, prices[i]); //更新最小值
+        }
+        return ans;
+    }
+}
+```
