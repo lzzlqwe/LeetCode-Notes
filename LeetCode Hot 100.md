@@ -2027,3 +2027,19 @@ class Solution {
     }
 }
 ```
+
+## [2.跳跃游戏](https://leetcode.cn/problems/jump-game/description)
+思路：依次遍历数组中的每一个位置，并实时维护 最远可以到达的位置；如果当前位置已超出目前可到达的最远距离，则返回false。
+代码：
+```
+class Solution {
+    public boolean canJump(int[] nums) {
+        int maxLength = 0; //目前可到达的最远距离
+        for(int i = 0; i < nums.length; i++){
+            if(i > maxLength) return false; //当前位置已超出目前可到达的最远距离
+            maxLength = Math.max(maxLength, i + nums[i]); //更新目前可到达的最远距离
+        }
+        return true;
+    }
+}
+```
