@@ -2043,3 +2043,25 @@ class Solution {
     }
 }
 ```
+
+## [3.跳跃游戏 II](https://leetcode.cn/problems/jump-game-ii/description)
+思路：参考灵神的思路。想象你在一段一段地建桥，每次在你已建的桥上寻找下一次可建的最远桥，当走到已建桥的尽头就进行下一次的建桥。最后建了几段桥，就是最小的跳跃步数。
+代码：
+```
+class Solution {
+    public int jump(int[] nums) {
+        int n = nums.length;
+        int curBridge = 0; //当前桥的右端点
+        int nextBridge = 0; //下一次建桥的最远位置
+        int step = 0; //最小跳跃次数
+        for(int i = 0; i < n - 1; i++){ //注意不用遍历最后一个位置
+            nextBridge = Math.max(nextBridge, i + nums[i]);
+            if(i == curBridge){ //走到桥的尽头
+                curBridge = nextBridge; //建桥
+                step++;//步数加1
+            }
+        }
+        return step;
+    }
+}
+```
