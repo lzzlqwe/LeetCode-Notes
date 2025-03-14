@@ -2065,3 +2065,30 @@ class Solution {
     }
 }
 ```
+
+## [4.划分字母区间](https://leetcode.cn/problems/partition-labels/description)
+思路：参考灵神的思路。首先遍历字符串s计算每个字符的最右下标。之后维护一个区间[start, end]，重新遍历s，每次更新end = max(end, 当前字符最右下标)，然后判断当前i是否已经走到end，若是则划分该区间，重复此过程。
+代码：
+```
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        Map<Character, Integer> mp = new HashMap<>();//记录每个字符的最右下标
+        char[] arr = s.toCharArray();
+        for(int i = 0; i < arr.length; i++){
+            mp.put(arr[i], i);
+        }
+        //开始划分字母区间
+        List<Integer> ans = new ArrayList<>();
+        int start = 0, end = 0; //记录当前待划分区间
+        for(int i = 0; i < arr.length; i++){
+            end = Math.max(end, mp.get(arr[i])); //更新区间右边界
+            if(i == end){ //表示区间内的字符后面不会再出现了，可以进行划分
+                ans.add(end - start + 1);
+                start = end + 1;
+                end = start;
+            }
+        }
+        return ans;
+    }
+}
+```
