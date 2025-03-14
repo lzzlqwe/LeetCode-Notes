@@ -2067,7 +2067,7 @@ class Solution {
 ```
 
 ## [4.划分字母区间](https://leetcode.cn/problems/partition-labels/description)
-思路：参考灵神的思路。首先遍历字符串s计算每个字符的最右下标。之后维护一个区间[start, end]，重新遍历s，每次更新end = max(end, 当前字符最右下标)，然后判断当前i是否已经走到end，若是则划分该区间，重复此过程。
+思路：参考灵神的思路。首先遍历字符串s计算每个字符的最右下标。之后维护一个区间[start, end]，重新遍历s，每次更新end = max(end, 当前字符最右下标)，然后判断当前i是否已经走到end，若是则划分该区间，重复此过程。   
 代码：
 ```
 class Solution {
