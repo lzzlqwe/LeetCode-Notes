@@ -2111,3 +2111,28 @@ class Solution {
     }
 }
 ```
+
+## [2.杨辉三角](https://leetcode.cn/problems/pascals-triangle/description)
+思路：每一行左对齐。各行的首尾都是1，中间部分则通过dp继续计算。  
+代码：
+```
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> line = new ArrayList<>();
+        line.add(1);
+        ans.add(line);
+        for(int i = 1; i < numRows; i++){
+            line = ans.get(i-1);
+            List<Integer> new_line = new ArrayList<>();
+            new_line.add(1);
+            for(int j = 1; j < line.size(); j++){
+                new_line.add(line.get(j-1) + line.get(j));
+            }
+            new_line.add(1);
+            ans.add(new_line);
+        }
+        return ans;
+    }
+}
+```
