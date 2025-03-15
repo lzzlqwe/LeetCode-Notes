@@ -2154,3 +2154,22 @@ class Solution {
     }
 }
 ```
+
+## [4.完全平方数](https://leetcode.cn/problems/perfect-squares/description/)
+思路：状态转移方程 dp[i][j] = min(dp[i-1][j], dp[i][j-i*i]+1)，套用完全背包一维模板。   
+代码：
+```
+class Solution {
+    public int numSquares(int n) {
+        int x = (int)Math.floor(Math.sqrt(n)); //得到小于等于n的最大完全平方数的开方
+        int[] dp = new int[n+1]; //dp[i][j]表示考虑前i个数，和为j的完全平方数的最少数量
+        for(int i = 1; i <= n; i++) dp[i] = Integer.MAX_VALUE; //初始化
+        for(int i = 1; i <= x; i++){
+            for(int j = i*i; j <= n; j++){
+                dp[j] = Math.min(dp[j], dp[j-i*i] + 1);
+            }
+        }
+        return dp[n];
+    }
+}
+```
