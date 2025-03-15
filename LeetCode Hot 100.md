@@ -2138,7 +2138,19 @@ class Solution {
 ```
 
 ## [3.打家劫舍](https://leetcode.cn/problems/house-robber/description)
-思路：  
-代码：
+思路：选或者不选。前i号房屋的最高金额 = max(选：前i-2号房屋的最高金额+i号房屋的金额，不选：前i-1号房屋的最高金额)，得到dp递推公式。    
+代码：  
 ```
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for(int i = 2; i <= n; i++){
+            dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i-1]);
+        }
+        return dp[n];
+    }
+}
 ```
