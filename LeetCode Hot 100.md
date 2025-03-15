@@ -2173,3 +2173,22 @@ class Solution {
     }
 }
 ```
+
+## [5.零钱兑换](https://leetcode.cn/problems/coin-change/description/)
+思路：状态转移方程：f[i][j] = min(f[i-1][j], f[i][j-val]+1)，套用完全背包一维模板。   
+代码：
+```
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int[] dp = new int[amount + 1];
+        for(int i = 1; i <= amount; i++) dp[i] = 10001; //初始化
+        for(int i = 1; i <= n; i++){
+            for(int j = coins[i-1]; j <= amount; j++){
+                dp[j] = Math.min(dp[j], dp[j-coins[i-1]] + 1);
+            }
+        }
+        return dp[amount] == 10001 ? -1 : dp[amount];
+    }
+}
+```
