@@ -2217,3 +2217,56 @@ class Solution {
     }
 }
 ```
+
+## [2.字符串相乘](https://leetcode.cn/problems/multiply-strings/description/)
+思路：用num2的每一位去乘以num1，然后补齐后缀0，再相加。     
+代码：
+```
+class Solution {
+    public String multiply(String num1, String num2) {
+        if(num1.equals("0") || num2.equals("0")) return "0"; //如果有一个为0则直接返回0
+        String ans = "0";
+        for(int i = num2.length()-1; i >= 0; i--){ //用num2的每一位去乘以num1，再相加。
+            StringBuilder temp = new StringBuilder(mul(num1, num2.charAt(i)));
+            //补充temp的后缀0
+            for(int j = 0; j < num2.length()-1-i; j++)
+                temp.append("0");
+            ans = addStrings(ans, temp.toString());
+        }
+        return ans;
+    }
+
+    //1位数乘以一个数
+    public String mul(String num, char c){
+        int l = num.length() - 1;
+        int carry = 0;
+        StringBuilder ans = new StringBuilder();
+        while(l >= 0 || carry != 0){
+            int a = l >= 0? num.charAt(l) - '0' : 0;
+            int val = a * (c - '0') + carry;
+            ans.append(val % 10);
+            carry = val / 10;
+            l--;
+        }
+        return ans.reverse().toString();
+    }
+
+    //两数相加
+    public String addStrings(String num1, String num2) {
+        int l1 = num1.length() - 1; //从字符串右边（低位）开始计算
+        int l2 = num2.length() - 1; //从字符串右边（低位）开始计算
+        int carry = 0; //进位
+        StringBuilder ans = new StringBuilder();
+        while(l1 >= 0 || l2 >= 0 || carry != 0){
+            int a = l1 >= 0 ? num1.charAt(l1) - '0' : 0;
+            int b = l2 >= 0 ? num2.charAt(l2) - '0' : 0;
+            int val = a + b + carry;
+            ans.append(val % 10);
+            carry = val / 10;
+            l1--;
+            l2--;
+        }
+        return ans.reverse().toString();
+    }
+}
+```
