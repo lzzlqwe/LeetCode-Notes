@@ -757,7 +757,7 @@ class Solution {
 ```
 
 ## [7.两数相加](https://leetcode.cn/problems/add-two-numbers/description/)
-思路：创建一个哨兵节点。然后同时遍历l1和l2，直到最长链为null为止。每次遍历计算当前位和当前进位即可。    
+思路：创建一个哨兵节点。然后同时遍历l1和l2，直到最长链为null且进位为0为止。每次遍历计算当前位和当前进位即可。    
 代码：
 ```
 class Solution {
@@ -766,7 +766,7 @@ class Solution {
         ListNode preHead = new ListNode();
         ListNode cur = preHead;
         int carry = 0; //保存当前进位
-        while(l1 != null || l2 != null){
+        while(l1 != null || l2 != null || carry != 0){
             int val1 = l1 != null ? l1.val : 0;
             int val2 = l2 != null ? l2.val : 0;
             int curVal = val1 + val2 + carry; //计算当前位
@@ -776,8 +776,6 @@ class Solution {
             if(l1 != null) l1 = l1.next;
             if(l2 != null) l2 = l2.next;
         }
-        if(carry == 1)
-            cur.next = new ListNode(1);
         return preHead.next;
     }
 }
