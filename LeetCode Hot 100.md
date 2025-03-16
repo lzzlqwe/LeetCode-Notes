@@ -2192,3 +2192,30 @@ class Solution {
     }
 }
 ```
+
+
+# 模拟题
+
+## [1.字符串相加](https://leetcode.cn/problems/add-strings/description/)
+思路：和链表的两数相加类似。两个字符串从低位开始相加，直到最长数走完和进位为空为止。     
+代码：
+```
+class Solution {
+    public String addStrings(String num1, String num2) {
+        int l1 = num1.length() - 1; //从字符串右边（低位）开始计算
+        int l2 = num2.length() - 1; //从字符串右边（低位）开始计算
+        int carry = 0; //进位
+        StringBuilder ans = new StringBuilder();
+        while(l1 >= 0 || l2 >= 0 || carry != 0){
+            int a = l1 >= 0 ? num1.charAt(l1) - '0' : 0;
+            int b = l2 >= 0 ? num2.charAt(l2) - '0' : 0;
+            int val = a + b + carry;
+            ans.append(val % 10);
+            carry = val / 10;
+            l1--;
+            l2--;
+        }
+        return ans.reverse().toString();
+    }
+}
+```
