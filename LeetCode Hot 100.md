@@ -2191,6 +2191,66 @@ class Solution {
 }
 ```
 
+## [6.最长递增子序列 LIS](https://leetcode.cn/problems/longest-increasing-subsequence/description/)
+思路一：dp[i]表示以nums[i]元素结尾的最长递增子序列长度。状态转移方程为dp[i] = max{dp[j]}+1，其中j<i且nums[j] < nums[i]。      
+代码：
+```
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n]; //dp[i]表示以nums[i]元素结尾的最长递增子序列长度。
+        //状态转移方程为dp[i] = max{dp[j]}+1，其中j<i且nums[j] < nums[i]
+        int ans = 0;
+        for(int i = 0; i < n; i++)
+        {
+            int max = 0;
+            for(int j = 0; j < i; j++)
+            {
+                if(nums[j] < nums[i] && dp[j] > max)
+                    max = dp[j];
+            }
+            dp[i] = max + 1;
+            if(dp[i] > ans) ans = dp[i];
+        }
+        return ans;
+    }
+}
+```
+
+思路二：贪心 + 二分查找。考虑一个简单的贪心，如果我们要使上升子序列尽可能的长，则我们需要让序列上升得尽可能慢，因此我们希望每次在上升子序列最后加上的那个数尽可能的小。基于上面的贪心思路，我们维护一个数组 d[i] ，表示长度为 i 的最长上升子序列的末尾元素的最小值，用 len 记录目前最长上升子序列的长度，起始时 len 为 1，d[1]=nums[0]。依次遍历数组 nums 中的每个元素，并更新数组 d 和 len 的值。如果 nums[i]>d[len] 则更新 len=len+1，并将nums[i]添加到d数组末尾。否则在 d[1…len]（二分查找闭区间写法，下标从1到len）中找到第一个大于等于nums[i]的下标k，将d[k]覆盖为nums[i]。最终返回len即为结果。
+
+代码：
+```
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int[] d = new int[nums.length + 1]; //d[i]表示长度为i的严格递增子序列的末尾最小元素
+        int len = 1; //记录目前最长上升子序列的长度
+        d[len] = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] > d[len]){
+                len++;
+                d[len] = nums[i];
+            }else{
+                int idx = lowerBound(d, 1, len, nums[i]);
+                d[idx] = nums[i];
+            }
+        }
+        return len;
+    }
+
+    public int lowerBound(int[] nums, int left, int right, int target){
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        return left;
+    }
+}
+```
+
 
 # 模拟题
 
