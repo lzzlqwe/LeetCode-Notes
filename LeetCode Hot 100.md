@@ -2251,6 +2251,30 @@ class Solution {
 }
 ```
 
+## [7.分割等和子集](https://leetcode.cn/problems/partition-equal-subset-sum/description/)
+思路：问题转换为从数组nums选择一些数，使得其和恰好为sum/2。0-1背包问题，状态转移方程为:dp[i][j] = dp[i-1][j] || dp[i-1][j-val]。     
+代码：
+```
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for(int x : nums) sum += x; //计算总和
+        if(sum % 2 == 1) return false; //如果总和为奇数，返回false
+        //状态转移方程为：dp[i][j] = dp[i-1][j] | dp[i-1][j-v]
+         boolean[] dp = new boolean[sum/2+1]; //dp[i][j]表示前i个数中有可以组成和恰好为j的子集。值为0或者1
+        dp[0] = true; //初始化
+        for(int i = 1; i <= n; i++){
+            for(int j = sum/2; j >= nums[i-1]; j--){
+                dp[j] = dp[j] | dp[j-nums[i-1]];
+            }
+            if(dp[sum/2]) return true; //加多这一行，提前判断是否找到满足sum/2的子集
+        }
+        return dp[sum/2];
+    }
+}
+```
+
 
 # 模拟题
 
