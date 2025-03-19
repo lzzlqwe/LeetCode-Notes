@@ -2303,6 +2303,30 @@ class Solution {
 }
 ```
 
+## [9.乘积最大子数组](https://leetcode.cn/problems/maximum-product-subarray/description)
+思路：本题是[53. 最大子数组和]的乘法版本。首先用两个数组fmax和fmin记录以下标i结尾的子数组最大/最小乘积（分别代表正负，如果下一元素是负数，负负得正可以得到最大值），for循环遍历，状态转移方程为min(fmin[i-1] * nums[i], fmax[i-1] * nums[i], nums[i])和fmax[i] = max(fmin[i-1] * nums[i], fmax[i-1] * nums[i], nums[i])。最后返回MAX（fmaxx[i]）。    
+代码：
+```
+class Solution {
+    public int maxProduct(int[] nums) {
+        int[] fmin = new int[nums.length]; //fmin[i]表示以下标i结尾的子数组最小乘积
+        int[] fmax = new int[nums.length]; //fmax[i]表示以下标i结尾的子数组最大乘积
+        fmin[0] = nums[0];
+        fmax[0] = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            fmin[i] = Math.min(Math.min(fmin[i-1] * nums[i], fmax[i-1] * nums[i]), nums[i]);
+            fmax[i] = Math.max(Math.max(fmin[i-1] * nums[i], fmax[i-1] * nums[i]), nums[i]);
+        }
+        int ans = Integer.MIN_VALUE;
+        for(int x : fmax){
+            ans = Math.max(ans, x);
+        }
+        return ans;
+    }
+}
+```
+
+
 
 # 模拟题
 
