@@ -2275,6 +2275,34 @@ class Solution {
 }
 ```
 
+## [8.单词拆分](https://leetcode.cn/problems/word-break/description)
+思路：首先用哈希表记录字典中的单词。然后for循环i，dp[i]表示s前i个字符是否由多个单词拼接而成。状态转移方程dp[i] = dp[j] && contains(s[j..i-1])，其中contains(s[j..i−1]) 表示子串 s[j..i−1] 是否出现在字典中。    
+代码：
+```
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> mp = new HashSet<>(); //哈希表用于记录单词是否出现
+        for(String str : wordDict){
+            mp.add(str);
+        }
+        int n = s.length();
+        boolean[] dp = new boolean[n+1]; //dp[i]表示s前i个字符是否由多个单词拼接而成
+        dp[0] = true; //初始化
+        for(int i = 1; i <= n; i++){
+            //状态转移方程dp[i] = dp[j] && contains(s[j..i-1])
+            //其中 contains(s[j..i−1]) 表示子串 s[j..i−1] 是否出现在字典中
+            for(int j = i-1; j >= 0; j--){ //子串的起始下标
+                if(dp[j] && mp.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[n];
+    }
+}
+```
+
 
 # 模拟题
 
