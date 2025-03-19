@@ -2406,3 +2406,24 @@ class Solution {
     }
 }
 ```
+
+
+# 多维动态规划
+
+## [1.不同路径](https://leetcode.cn/problems/unique-paths/description)
+思路：状态转移方程为dp[i][j] = dp[i-1][j] + dp[i][j-1];     
+代码：
+```
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m+1][n+1];
+        dp[0][1] = 1; //初始化，用于计算dp[1][1]
+        for(int i = 1; i <= m; i++){
+            for(int j = 1; j <= n; j++){
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m][n];
+    }
+}
+```
