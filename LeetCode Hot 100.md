@@ -2474,3 +2474,34 @@ class Solution {
     }
 }
 ```
+
+## [4.编辑距离](https://leetcode.cn/problems/edit-distance/description/)
+思路：dp[i][j]表示word1前i个字符转换为word2的前j个字符的最少操作数。状态转移方程如下：   
+![image](https://github.com/user-attachments/assets/102dd6bd-f89d-45b7-bfe9-645ca554dae9)
+
+代码：
+```
+class Solution {
+    public int minDistance(String word1, String word2) {
+        char[] str1 = word1.toCharArray();
+        char[] str2 = word2.toCharArray();
+        int l1 = str1.length, l2 = str2.length;
+        int[][] dp = new int[l1+1][l2+1]; //dp[i][j]表示word1[:i]转换成word2[:j]的最少操作数
+        for(int i = 1; i <= l1; i++) dp[i][0] = i; //根据实际意义初始化
+        for(int j = 1; j <= l2; j++) dp[0][j] = j; //根据实际意义初始化
+        for(int i = 1; i <= l1; i++){
+            for(int j = 1; j <= l2; j++){
+                if(str1[i-1] == str2[j-1])
+                    dp[i][j] = dp[i-1][j-1]; //不需要任何操作
+                else //替换，删除，增加
+                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1;
+            }
+        }
+        return dp[l1][l2];
+    }
+
+    public int min(int a, int b, int c){
+        return Math.min(a, Math.min(b, c));
+    }
+}
+```
