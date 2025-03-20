@@ -2505,3 +2505,33 @@ class Solution {
     }
 }
 ```
+
+## [5.最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/description)
+思路：区间DP，思路和[最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/description/)类似。外层循环倒序遍历左边界i，内层循环顺序遍历右边界j，dp[i][j]表示s[i]到s[j]是否为回文子串，dp[i][j]长度为1时则为true，长度为2时则判断str[i] == str[j]，其余情况的状态转移方程为dp[i][j] = str[i] == str[j] && dp[i+1][j-1]。整个过程更新和记录最长回文子串。     
+代码：
+```
+class Solution {
+    public String longestPalindrome(String s) {
+        char[] str = s.toCharArray();
+        int n = str.length;
+        boolean[][] dp = new boolean[n][n]; //dp[i][j]表示s[i]到s[j]是否为回文子串
+        int maxLeft = 0, maxLength = 0; //记录最长回文子串的左边界和长度
+        for(int i = n-1; i >= 0; i--){
+            for(int j = i; j < n; j++){
+                if(j == i)//长度为1
+                    dp[i][j] = true;
+                else if(j - i + 1 == 2) //长度为2
+                    dp[i][j] = str[i] == str[j];
+                else //长度大于2
+                    dp[i][j] = str[i] == str[j] && dp[i+1][j-1];
+                if(dp[i][j] && j - i + 1 > maxLength){ //更新答案
+                    maxLeft = i;
+                    maxLength = j - i + 1;
+                }
+            }
+        }
+        return s.substring(maxLeft, maxLeft + maxLength);
+    }
+}
+```
+
