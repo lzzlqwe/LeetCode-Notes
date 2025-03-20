@@ -2452,7 +2452,7 @@ class Solution {
 ```
 
 ## [3.最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/description/)
-思路：dp[i][j]表示text1前i和text2前j个字符的LCS长度。状态转移方程为，如果第i和第j个字符一样，则dp[i][j] = dp[i-1][j-1] + 1，否则dp[i][j] = max(dp[i-1][j], dp[i][j-1])。     
+思路：最长公共子序列LCS。dp[i][j]表示text1前i和text2前j个字符的LCS长度。状态转移方程为，如果第i和第j个字符一样，则dp[i][j] = dp[i-1][j-1] + 1，否则dp[i][j] = max(dp[i-1][j], dp[i][j-1])。     
 代码：
 ```
 class Solution {
@@ -2476,7 +2476,7 @@ class Solution {
 ```
 
 ## [4.编辑距离](https://leetcode.cn/problems/edit-distance/description/)
-思路：dp[i][j]表示word1前i个字符转换为word2的前j个字符的最少操作数。状态转移方程如下：   
+思路：最长公共子序列LCS。dp[i][j]表示word1前i个字符转换为word2的前j个字符的最少操作数。状态转移方程如下：   
 ![image](https://github.com/user-attachments/assets/102dd6bd-f89d-45b7-bfe9-645ca554dae9)
 
 代码：
