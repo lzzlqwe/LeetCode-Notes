@@ -2551,3 +2551,22 @@ class Solution {
     }
 }
 ```
+
+
+## [2.多数元素](https://leetcode.cn/problems/majority-element/description)
+思路：ans记录众数，num记录他的数量。for循环，遍历当前数x，如果num=0，将当前数x作为众数ans，然后判断x是否为众数，是则num+1，否则num-1。循环结束后ans即为答案。     
+代码：
+```
+class Solution {
+    public int majorityElement(int[] nums) {
+        int ans = 0, num = 0; //ans是众数，num是他的数量
+        for(int x : nums){
+            if(num == 0) //如果当前计数为0，则将其作为众数
+                ans = x;
+            if(x == num) num++; //当前值为众数，加一
+            else num--; //减一
+        }   
+        return ans;
+    }
+}
+```
