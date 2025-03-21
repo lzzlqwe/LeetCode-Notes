@@ -2535,3 +2535,19 @@ class Solution {
 }
 ```
 
+# 技巧
+
+## [1.只出现一次的数字](https://leetcode.cn/problems/single-number/description)
+思路：给定一个0，将数组的每个数依次和他进行按位异或，最后得到的数据就是只出现一次的数。     
+代码：
+```
+class Solution {
+    public int singleNumber(int[] nums) {
+        int ans = 0;
+        for(int i = 0; i < nums.length; i++){
+            ans ^= nums[i];
+        }
+        return ans;
+    }
+}
+```
