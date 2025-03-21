@@ -2570,3 +2570,30 @@ class Solution {
     }
 }
 ```
+
+## [3.颜色分类](https://leetcode.cn/problems/sort-colors/description)
+思路：维护p0和p2两个指针，分别指向待交换位置。从左到右循环遍历i，如果当前元素为2，则不停循环将2交换到尾部；然后判断当前元素是否为0，是则将0交换到头部，否则i++。当i大于p2时，循环结束。
+代码：
+```
+class Solution {
+    public void sortColors(int[] nums) {
+        int p0 = 0, p2 = nums.length - 1;//分别指向待交换位置
+        int i = 0; //遍历当前元素
+        while(i <= p2){
+            while(i <= p2 && nums[i] == 2){ //将2交换到尾部
+                int temp = nums[i];
+                nums[i] = nums[p2];
+                nums[p2] = temp;
+                p2--;
+            }
+            if(nums[i] == 0){ //将0交换到头部
+                int temp = nums[i];
+                nums[i] = nums[p0];
+                nums[p0] = temp;
+                p0++;
+            }
+            i++;
+        }
+    }
+}
+```
