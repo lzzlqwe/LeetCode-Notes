@@ -2635,3 +2635,28 @@ class Solution {
     }
 }
 ```
+
+## [5.寻找重复数](https://leetcode.cn/problems/next-permutation/description)
+思路：以0到n的索引建立一个环形链表，节点值为索引i，nums[i]表示当前索引i的下一个索引。因为nums存在重复数x，也就是有两个索引（节点）的next指向索引x（节点x），所以一定有环，且索引x为环入口。使用[环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)的思路即可解决。  
+![image](https://github.com/user-attachments/assets/a722ceea-5429-4998-980b-2de97e262ddf)  
+
+代码：
+```
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = 0, fast = 0;
+        do{ //快慢指针一直走，直到相遇（因为存在环）
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow != fast); 
+        //之后slow指针回到起点，fast则留在相遇点。
+        //快慢指针同时走，每次都走一步，相遇点就是环入口，也就是重复数。
+        slow = 0;
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+}
+```
