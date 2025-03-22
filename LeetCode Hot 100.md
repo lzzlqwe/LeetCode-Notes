@@ -2597,3 +2597,41 @@ class Solution {
     }
 }
 ```
+
+## [4.下一个排列](https://leetcode.cn/problems/next-permutation/description)
+思路：参考灵神的思路。第一步:从右往左找到第一个小于右侧相邻数的数nums[i]，如果找到了nums[i]，此时i右边的数一定为单调递减。第二步：从右向左找到 nums[i] 右边最小的大于 nums[i] 的数 nums[j]。交换nums[i]和nums[j]的值，此时i右边的数仍然为单调递减。第三步：反转nums[i]右边的所有数（如果上面跳过第二步，此时 i = -1）   
+代码：
+```
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        //第一步:从右往左找到第一个小于右侧相邻数的数nums[i]
+        int i = n - 2;
+        while(i >= 0 && nums[i] >= nums[i+1])
+            i--;
+        if(i >= 0){ //如果找到了nums[i]，此时i右边的数一定为单调递减
+            //第二步：从右向左找到 nums[i] 右边最小的大于 nums[i] 的数 nums[j]。交换nums[i]和nums[j]的值
+            int j = n - 1;
+            while(nums[j] <= nums[i])
+                j--;
+            swap(nums, i, j); //交换nums[i]和nums[j]的值，此时i右边的数仍然为单调递减
+        }
+        //第三步：反转nums[i]右边的所有数（如果上面跳过第二步，此时 i = -1）
+        reverse(nums, i+1, n-1);
+    }
+
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public void reverse(int[] nums, int i, int j){
+        while(i <= j){
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+}
+```
