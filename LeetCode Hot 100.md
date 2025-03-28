@@ -2004,6 +2004,42 @@ class Solution {
 }
 ```
 
+# 堆
+
+## [1.数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/description)
+思路：利用快速排序思想，在区间内每次随机抽取一个数作为基准，for循环将区间内的数划分到small，equal以及big三个数组中，判断第k大的数在哪个数组中，若在equal则直接返回，否则继续递归查找。
+代码：
+```
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        List<Integer> arr = new ArrayList<>();
+        for(int x : nums) arr.add(x);
+        return quickSelect(arr, k);
+    }
+
+    public int quickSelect(List<Integer> nums, int k){
+        Random rand = new Random();
+        int base = nums.get(rand.nextInt(nums.size())); //随机选一个数作为基准
+        List<Integer> small = new ArrayList<>();
+        List<Integer> equal = new ArrayList<>();
+        List<Integer> big = new ArrayList<>();
+        for(int x : nums){ //三路划分
+            if(x < base) small.add(x);
+            else if(x > base) big.add(x);
+            else equal.add(x);
+        }
+        if(k <= big.size()){ //第k大的数在big数组
+            return quickSelect(big, k);
+        }else if(nums.size() - k < small.size()){
+            return quickSelect(small, small.size() + k - nums.size());
+        }else{
+            return base;
+        }
+    }
+}
+```
+
+
 # 贪心算法
 
 ## [1.买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/description)
