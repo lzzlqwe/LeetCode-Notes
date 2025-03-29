@@ -2672,7 +2672,7 @@ class Solution {
 }
 ```
 
-## [5.寻找重复数](https://leetcode.cn/problems/next-permutation/description)
+## [5.寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/description)
 思路：以0到n的索引建立一个环形链表，节点值为索引i，nums[i]表示当前索引i的下一个索引。因为nums存在重复数x，也就是有两个索引（节点）的next指向索引x（节点x），所以一定有环，且索引x为环入口。使用[环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)的思路即可解决。  
 ![image](https://github.com/user-attachments/assets/a722ceea-5429-4998-980b-2de97e262ddf)  
 
