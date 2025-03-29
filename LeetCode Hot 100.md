@@ -10,7 +10,7 @@ class Solution {
         for(String str : strs){
             char[] carr = str.toCharArray();
             Arrays.sort(carr);
-            String key = String.valueOf(carr);
+            String key = new String(carr);
             if(mp.containsKey(key))
                 mp.get(key).add(str);
             else{
