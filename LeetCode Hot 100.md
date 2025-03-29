@@ -52,26 +52,19 @@ class Solution {
 # 双指针
 
 ## [1.移动零](https://leetcode.cn/problems/move-zeroes/description/)
-思路：使用双指针，左指针始终指向第一个0， 右指针指向left后的第一个非零元素（其中left到right-1都为0），进行元素交换后，双指针继续向后移动。  
+思路：使用一个指针p，指向当前非0元素可以移动到的位置（初始位置为索引0）。for循环，若当前值非0，则和指针p元素交换值，p指向下一位置。  
 代码：
 ```
 class Solution {
     public void moveZeroes(int[] nums) {
-        int n = nums.length;
-        int left = 0; //始终指向第一个0
-        while(left < n && nums[left] != 0)
-            left++;
-        int right = left; //指向left后的非零元素
-        while(right < n && nums[right] == 0)
-            right++;
-        while(right < n){
-            int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
-            while(right < n && nums[right] == 0)
-                right++;
-            while(left < n && nums[left] != 0)
-                left++;
+        int p = 0; //指向当前非0元素可以移动到的位置
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] != 0){
+                int temp = nums[i];
+                nums[i] = nums[p];
+                nums[p] = temp;
+                p++; //指针指向下一位
+            }
         }
     }
 }
