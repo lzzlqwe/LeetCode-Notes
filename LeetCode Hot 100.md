@@ -1275,22 +1275,16 @@ class Solution {
 代码：
 ```
 class Solution {
-    public int n = 0; //当前找到的第n小元素
-    public int kthSmallest(TreeNode root, int k) {
-        return midDfs(root, k).val;
-    }
+    public int n = 0;
 
-    public TreeNode midDfs(TreeNode node, int k){
-        if(node == null)
-            return null;
-        TreeNode lTree = midDfs(node.left, k);//查找左子树
-        if(lTree != null) //左子树找到，直接返回
-            return lTree;
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null)
+            return -1;
+        int l = kthSmallest(root.left, k); //查找左子树
+        if(l != -1) return l;  //若已经找到则直接返回。
         n++;
-        if(n == k) //若当前节点是第k小元素
-            return node;
-        else
-            return midDfs(node.right, k);//只会在右子树
+        if(n == k) return root.val; //若当前节点满足则直接返回
+        return kthSmallest(root.right, k); //答案在右子树
     }
 }
 ```
