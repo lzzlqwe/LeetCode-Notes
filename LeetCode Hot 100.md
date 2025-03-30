@@ -1065,8 +1065,7 @@ class Solution {
                 stack.addLast(root); //入栈
                 root = root.left;
             }
-            root = stack.getLast(); //取出栈顶元素
-            stack.removeLast();
+            root = stack.removeLast(); //取出栈顶元素
             ans.add(root.val); //保存答案
             root = root.right; //继续查找右子树
         }
