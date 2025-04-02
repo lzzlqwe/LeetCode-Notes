@@ -1890,38 +1890,31 @@ class Solution {
 ```
 
 ## [2.最小栈](https://leetcode.cn/problems/min-stack/description)
-思路：维护两个栈，层层对应。一个是正常的栈；一个是辅助最小栈，辅助最小栈的栈顶元素表示当前正常栈的最小值。    
+思路：维护一个栈，存放的每个元素包括两个值（当前值，当前前缀和最小值）。每次入栈存入（当前值，min(之前前缀和最小值, 当前值)）。初始化时可以存入一个栈底哨兵。   
 代码：
 ```
 class MinStack {
 
-    public List<Integer> min_stack;
-    public List<Integer> stack;
+    public List<int[]> stack = new LinkedList<int[]>();
+
     public MinStack() {
-        this.min_stack = new LinkedList<>(); //维护一个辅助最小栈
-        this.min_stack.addLast(Integer.MAX_VALUE); //初始化辅助最小栈
-        this.stack = new LinkedList<>(); //维护一个栈
+        stack.add(new int[]{0, Integer.MAX_VALUE});
     }
     
     public void push(int val) {
-        stack.addLast(val); //入栈
-        if(min_stack.getLast() > val) //层层对应，维护辅助最小栈
-            min_stack.addLast(val);
-        else
-            min_stack.addLast(min_stack.getLast());
+        stack.add(new int[]{val, Math.min(stack.getLast()[1], val)});
     }
     
     public void pop() {
         stack.removeLast();
-        min_stack.removeLast();
     }
     
     public int top() {
-        return stack.getLast();
+        return stack.getLast()[0];
     }
     
     public int getMin() {
-        return min_stack.getLast();
+        return stack.getLast()[1];
     }
 }
 ```
