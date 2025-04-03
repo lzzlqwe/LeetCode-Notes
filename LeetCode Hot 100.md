@@ -1021,6 +1021,37 @@ class LRUCache {
 }
 ```
 
+## [13.反转链表 II](https://leetcode.cn/problems/reverse-linked-list-ii/description/)
+思路：在链表前面加一个哨兵节点，以解决特殊情况！！！一趟扫描完成反转。  
+代码：
+```
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        //添加哨兵节点，下标为0
+        ListNode preHead = new ListNode(0, head);
+        ListNode cur = preHead;
+        //找left位置的前缀节点
+        for(int i = 1; i < left; i++){
+            cur = cur.next;
+        }
+        ListNode listLeft = cur;
+        //反转[left, right]链表
+        ListNode pre = null;
+        cur = listLeft.next;
+        for(int i = 0; i < right-left+1; i++){
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        //重新拼接链表，此时pre为反转链表的首部，cur为反转链表的右边节点
+        listLeft.next.next = cur;
+        listLeft.next = pre;
+        return preHead.next;
+    }
+}
+```
+
 # 二叉树
 
 ## [1.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/description/)
