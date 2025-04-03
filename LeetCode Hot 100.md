@@ -950,29 +950,19 @@ class LRUCache {
         int key, value;
         Node pre, next;
 
-        public Node(){
-            this.key = -1;
-            this.value = -1;
-            this.pre = null;
-            this.next = null;
-        }
-        public Node(int key, int value, Node pre, Node next){
+        public Node(int key, int value){
             this.key = key;
             this.value = value;
-            this.pre = pre;
-            this.next = next;
         }
     }
 
     int capacity; //容量
-    int nums; //当前LRU缓存数
     Map<Integer, Node> mp = new HashMap<>(); //用于快速找到key对应的节点
     Node preHead;//哨兵节点，LRU缓存用双向链表模拟
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.nums = 0;
-        preHead = new Node(); //初始化双向链表
+        preHead = new Node(-1, -1); //初始化双向链表
         preHead.pre = preHead;
         preHead.next = preHead;
     }
@@ -982,13 +972,9 @@ class LRUCache {
         if(mp.containsKey(key)){
             Node node = mp.get(key); //获得查询节点
             //删除该节点
-            node.pre.next = node.next;
-            node.next.pre = node.pre;
+            delete(node);
             //将该节点移动到哨兵结点之后，表示最新访问
-            node.next = preHead.next;
-            node.pre = preHead;
-            preHead.next.pre = node;
-            preHead.next = node;
+            pushFront(node);
             return node.value;
         }
         else    
@@ -1001,30 +987,36 @@ class LRUCache {
             Node node = mp.get(key);
             node.value = value; //则变更其数据值 value
             //删除该节点
-            node.pre.next = node.next;
-            node.next.pre = node.pre;
+            delete(node);
             //将该节点移动到哨兵结点之后，表示最新访问
-            node.next = preHead.next;
-            node.pre = preHead;
-            preHead.next.pre = node;
-            preHead.next = node;
+            pushFront(node);
         }else{
             //新节点插入到哨兵结点之后
-            Node newNode = new Node(key, value, preHead, preHead.next); 
-            preHead.next.pre = newNode;
-            preHead.next = newNode;
-            mp.put(key, newNode);
-            nums++;
+            Node newNode = new Node(key, value); 
+            pushFront(newNode);
+            mp.put(key, newNode);//添加新节点到map
             //检查容量
-            if(nums > capacity){
+            if(mp.size() > capacity){
                 //删除双向链表最后一个节点
                 Node delNode = preHead.pre;
-                delNode.pre.next = preHead;
-                preHead.pre = delNode.pre;
-                nums--;
+                delete(delNode);
                 mp.remove(delNode.key);
             }
         }
+    }
+
+    //删除该节点
+    public void delete(Node node){
+        node.pre.next = node.next;
+        node.next.pre = node.pre;
+    }
+
+    //将该节点移动到哨兵结点之后，表示最新访问
+    public void pushFront(Node node){
+        node.next = preHead.next;
+        node.pre = preHead;
+        preHead.next.pre = node;
+        preHead.next = node;
     }
 }
 ```
