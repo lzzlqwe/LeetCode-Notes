@@ -1052,6 +1052,46 @@ class Solution {
 }
 ```
 
+## [14.K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/description)
+思路：在链表前面加一个哨兵节点。首先一趟扫描计算总节点数，之后计算总共需要反转多少段链表，再反转当前段的链表。  
+代码：
+```
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        //添加哨兵节点
+        ListNode preHead = new ListNode(-1, head);
+        //首先计算整个链表的总长度
+        int n = 0;
+        ListNode cur = head;
+        while(cur != null){
+            n++;
+            cur = cur.next;
+        }
+        ListNode listLeft = preHead; //当前反转链表段的上一节点
+        cur = head;
+        ListNode pre = null;
+        //之后计算总共需要反转多少段链表
+        for(int i = 0; i < n / k; i++){ 
+            //反转当前段的链表
+            for(int j = 0; j < k; j++){
+                ListNode nxt = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = nxt;
+            }
+            ListNode listTail = listLeft.next;
+            //重新拼接链表
+            listTail.next = cur;
+            listLeft.next = pre;
+            //更新当前反转链表段的上一节点
+            listLeft = listTail;
+        }
+        return preHead.next;
+    }
+}
+```
+
+
 # 二叉树
 
 ## [1.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/description/)
