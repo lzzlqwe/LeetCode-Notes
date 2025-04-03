@@ -941,7 +941,7 @@ class Solution {
 
 
 ## [12.LRU 缓存](https://leetcode.cn/problems/lru-cache/description/)
-思路：使用双向链表（有一个哨兵节点来简化操作）来模拟LRU缓存。每次新增节点时，则将其插入到哨兵节点之后（表示最近访问，若超出容量则删除双向链表最后一个节点）；更新或者查询节点时，则将原先节点移到哨兵节点之后（表示最近访问）。详见代码注释。       
+思路：使用双向链表（有一个哨兵节点来简化操作）来模拟LRU缓存。首先编写三个封装函数delete（删除该节点），pushFront（将该节点移动到哨兵结点之后，表示最新访问），getNode（获取 key 对应的节点，同时把该节点移动到哨兵结点之后，表示最新访问，封装了delete和pushFront）。之后每次新增节点时，则将其插入到哨兵节点之后（表示最近访问，若超出容量则删除双向链表最后一个节点）；更新或者查询节点时，则将原先节点移到哨兵节点之后（表示最近访问）。详见代码注释。       
 代码：
 ```
 class LRUCache {
@@ -969,27 +969,16 @@ class LRUCache {
     
     public int get(int key) {
         //首先判断LRU是否有该key
-        if(mp.containsKey(key)){
-            Node node = mp.get(key); //获得查询节点
-            //删除该节点
-            delete(node);
-            //将该节点移动到哨兵结点之后，表示最新访问
-            pushFront(node);
-            return node.value;
-        }
-        else    
+        if(!mp.containsKey(key))
             return -1;
+        return getNode(key).value;
     }
     
     public void put(int key, int value) {
         //首先判断LRU是否有该key
         if(mp.containsKey(key)){ //如果关键字 key 已经存在
-            Node node = mp.get(key);
-            node.value = value; //则变更其数据值 value
-            //删除该节点
-            delete(node);
-            //将该节点移动到哨兵结点之后，表示最新访问
-            pushFront(node);
+            Node node = getNode(key);
+            node.value = value; //更新值
         }else{
             //新节点插入到哨兵结点之后
             Node newNode = new Node(key, value); 
@@ -1017,6 +1006,16 @@ class LRUCache {
         node.pre = preHead;
         preHead.next.pre = node;
         preHead.next = node;
+    }
+
+    // 获取 key 对应的节点，同时把该节点移动到哨兵结点之后，表示最新访问
+    public Node getNode(int key){
+        Node node = mp.get(key);
+        //删除该节点
+        delete(node);
+        //将该节点移动到哨兵结点之后，表示最新访问
+        pushFront(node);
+        return node;
     }
 }
 ```
