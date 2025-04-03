@@ -1413,7 +1413,7 @@ class Solution {
 ```
 
 ## [15.二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/description/)
-思路：树形dp，和[二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/description/)类似，每次返回当前子树的最大链和v，若v小于0则返回0。遍历每个节点时顺带更新答案ans=max(ans, node.val + leftv + rightv). 
+思路：树形dp，和[二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/description/)类似，每次返回当前子树的最大链和v，若v小于0则返回0。遍历每个节点时顺带更新答案ans=max(ans, node.val + leftv + rightv).   
 代码：
 ```
 class Solution {
