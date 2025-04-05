@@ -2825,3 +2825,39 @@ class Solution {
     }
 }
 ```
+
+# 图论
+
+## [1.岛屿数量](https://leetcode.cn/problems/number-of-islands/description)
+思路：双层for循环，如果找到一个新岛，则dfs走完整个岛屿，ans加一；之后重新寻找新的岛屿。     
+代码：
+```
+class Solution {
+    int m, n;
+    public int numIslands(char[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        int ans = 0;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == '1'){ //如果找到岛屿
+                    dfs(grid, i, j); //dfs走完整个岛屿
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public void dfs(char[][] grid, int i, int j){
+        //如果走出边界或者碰到水，则直接返回
+        if(i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != '1')
+            return;
+        grid[i][j] = '2';//表示走过
+        dfs(grid, i-1, j);//上
+        dfs(grid, i, j+1);//右
+        dfs(grid, i+1, j);//下
+        dfs(grid, i, j-1);//左
+    }
+}
+```
