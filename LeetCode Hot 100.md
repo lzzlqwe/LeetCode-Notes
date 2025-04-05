@@ -1114,6 +1114,48 @@ class Solution {
 }
 ```
 
+## [15.合并 K 个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/description)
+思路：归并排序思想，详见代码注释。       
+代码：
+```
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        return mergeLists(lists, 0, lists.length-1);
+    }
+
+    //合并区间[l,r]内的有序链表
+    public ListNode mergeLists(ListNode[] lists, int l, int r){
+        if(l > r) //区间内没有链表
+            return null;
+        if(l == r) //只有一条链表
+            return lists[l];
+        int mid = (l + r) / 2;
+        ListNode leftList = mergeLists(lists, l, mid);
+        ListNode rightList = mergeLists(lists, mid+1, r);
+        return merge2Lists(leftList, rightList);
+    }
+
+    //合并两个有序链表
+    public ListNode merge2Lists(ListNode l1, ListNode l2){
+        ListNode preHead = new ListNode(-1); //哨兵节点
+        ListNode cur = preHead;
+        while(l1 != null && l2 != null){
+            if(l1.val <= l2.val){
+                cur.next = l1;
+                cur = cur.next;
+                l1 = l1.next;
+            }else{
+                cur.next = l2;
+                cur = cur.next;
+                l2 = l2.next;  
+            }
+        }
+        if(l1 == null) cur.next = l2;
+        else cur.next = l1;
+        return preHead.next;
+    }
+}
+```
 
 # 二叉树
 
