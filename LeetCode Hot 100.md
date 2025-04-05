@@ -470,6 +470,30 @@ class Solution {
 }
 ```
 
+## [5.缺失的第一个正数](https://leetcode.cn/problems/first-missing-positive/description)
+
+思路：使用置换做法，将题目中的示例二 [3, 4, -1, 1] 进行置换，恢复后的数组应当为 [1, -1, 3, 4]，我们就可以知道缺失的数为 2。具体做法就是从头for循环，如果当前数为1到n范围内的正整数且不在他应有的位置，则将他和他应有的位置进行交换。详见代码。  
+代码：
+```
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        for(int i = 0; i < n; i++){
+            //如果当前数为[1-n]的正整数且不在他应有的位置，则将他和他应有的位置进行交换
+            while(1 <= nums[i] && nums[i] <= n && nums[i] != nums[nums[i]-1]){
+                int temp = nums[nums[i]-1]; //注意不能先temp = nums[i]，因为nums[i]会改变！！
+                nums[nums[i]-1] = nums[i];
+                nums[i] = temp;
+            }
+        }
+        for(int i = 0; i < n; i++){
+            if(nums[i] != i + 1) return i + 1;
+        }
+        return n + 1;
+    }
+}
+```
+
 # 矩阵
 
 ## [1.矩阵置零](https://leetcode.cn/problems/set-matrix-zeroes/description/)
