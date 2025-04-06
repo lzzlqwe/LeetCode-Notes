@@ -1835,6 +1835,49 @@ class Solution {
 }
 ```
 
+## [8.N 皇后](https://leetcode.cn/problems/n-queens/description)
+思路：。     
+代码：
+```
+class Solution {
+    int n;
+    boolean[] diag1, diag2, cols;
+    List<List<String>> ans;
+    public List<List<String>> solveNQueens(int n) {
+        this.n = n;
+        this.cols = new boolean[n]; //列
+        this.diag1 = new boolean[2*n+1]; //diag1左上
+        this.diag2 = new boolean[2*n+1]; //diag2右上
+        this.ans = new ArrayList<>();
+        dfs(new int[n], 0);
+        return ans;
+    }
+
+    void dfs(int[] queen, int row){ //行row的皇后的列位置为queen[row]
+        if(row == n){
+            List<String> temp = new ArrayList<>();
+            for(int i = 0; i < n; i++){
+                char[] line = new char[n]; // 创建一个长度为n的char数组
+                Arrays.fill(line, '.'); // 将所有元素设置为 '.'
+                line[queen[i]] = 'Q'; //某一列放置皇后
+                temp.add(new String(line));
+            }
+            ans.add(temp);
+            return;
+        }
+        for(int col = 0; col < n; col++){
+            //在当前行中，判断该列是否可以放置皇后
+            if(!cols[col] && !diag1[row-col+(n-1)] && !diag2[row+col]){
+                queen[row] = col; //记录当前行的皇后列位置
+                cols[col] = diag1[row-col+(n-1)] = diag2[row+col] = true;
+                dfs(queen, row + 1);
+                cols[col] = diag1[row-col+(n-1)] = diag2[row+col] = false;//回溯
+            }
+        }
+    }
+}
+```
+
 # 二分查找
 
 ## [1.搜索插入位置](https://leetcode.cn/problems/search-insert-position/description)
