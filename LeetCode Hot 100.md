@@ -1836,7 +1836,7 @@ class Solution {
 ```
 
 ## [8.N 皇后](https://leetcode.cn/problems/n-queens/description)
-思路：。     
+思路：dfs遍历每一行中，判断皇后放在哪一列（三个boolean数组判断（列，左上对角线，右上对角线）），详见代码注释。       
 代码：
 ```
 class Solution {
