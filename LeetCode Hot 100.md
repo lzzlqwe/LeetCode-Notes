@@ -2861,3 +2861,45 @@ class Solution {
     }
 }
 ```
+
+## [2.腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/description)
+思路：首先双层for循环，将腐烂橘子入队，并统计还剩下新鲜橘子的数量。BFS：如果还有新鲜橘子且队列不为空，进行bfs搜索。bfs搜索完之后，如果还有新鲜橘子，返回-1；否则返回分钟数。     
+代码：
+```
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] dir = new int[][]{{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; 
+        int num = 0;//统计新鲜橘子总数
+        List<int[]> queue = new LinkedList<>();
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 2) //烂橘子加入队列
+                    queue.addLast(new int[]{i, j});
+                else if(grid[i][j] == 1) //统计新鲜橘子总数
+                    num++;
+            }
+        }
+        int minute = 0;
+        while(num > 0 && !queue.isEmpty()){
+            int size = queue.size();
+            minute++;
+            for(int i = 0; i < size; i++){
+                int[] cur = queue.removeFirst();//取出队首元素
+                for(int j = 0; j < 4; j++){ //查找四个方向
+                    int nextx = cur[0] + dir[j][0];
+                    int nexty = cur[1] + dir[j][1];
+                    if(nextx >= 0 && nextx < m && nexty >= 0 && nexty < n && grid[nextx][nexty] == 1){
+                        queue.add(new int[]{nextx, nexty});
+                        grid[nextx][nexty] = 2;
+                        num--;
+                    }
+                }
+            }
+        }
+        if(num > 0) return -1;
+        else return minute;
+    }
+}
+```
