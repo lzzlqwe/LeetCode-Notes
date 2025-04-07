@@ -2534,6 +2534,30 @@ class Solution {
 }
 ```
 
+## [9.最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/description/?envType=study-plan-v2&envId=top-100-liked)
+思路：dp[i]表示以s[i]结尾的有效括号最长长度。for循环从下标1开始遍历，只找右括号（左括号结尾的长度肯定为0）并进一步判断：如果前一个括号是'('，则状态转移方程为dp[i] = dp[i-2] + 2; 否则如果前一个字符是')'且s[i-dp[i-1]-1]是左括号，状态转移方程为dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2]。记得有三处地方需要判断下标是否越界。最大的dp[i]就是答案。  
+代码：
+```
+class Solution {
+    public int longestValidParentheses(String s) {
+        int n = s.length();
+        int ans = 0;
+        int[] dp = new int[n]; //表示以s[i]结尾的有效括号最长长度
+        for(int i = 1; i < n; i++){
+            if(s.charAt(i) == ')'){ //找到以右括号结尾的
+                if(s.charAt(i-1) == '(') //如果前一个字符是左括号
+                    dp[i] = i >= 2 ? dp[i-2] + 2 : 2;
+                //如果前一个字符是右括号且s[i-dp[i-1]-1]是左括号
+                else if(i-dp[i-1]-1 >= 0 && s.charAt(i-dp[i-1]-1) == '('){ 
+                    dp[i] = dp[i-1] + 2 + (i-dp[i-1]-2 >= 0 ? dp[i-dp[i-1]-2] : 0);
+                }
+            }
+            ans = Math.max(ans, dp[i]);//遍历时顺便记录答案
+        }
+        return ans;
+    }
+}
+```
 
 
 # 模拟题
