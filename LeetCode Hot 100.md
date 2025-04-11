@@ -2190,22 +2190,21 @@ class Solution {
     }
 
     public int quickSelect(List<Integer> nums, int k){
-        Random rand = new Random();
-        int base = nums.get(rand.nextInt(nums.size())); //随机选一个数作为基准
         List<Integer> small = new ArrayList<>();
         List<Integer> equal = new ArrayList<>();
         List<Integer> big = new ArrayList<>();
+        int target = nums.get(new Random().nextInt(nums.size())); //随机选一个数作为基准
         for(int x : nums){ //三路划分
-            if(x < base) small.add(x);
-            else if(x > base) big.add(x);
-            else equal.add(x);
+            if(x < target) small.add(x);
+            else if(x == target) equal.add(x);
+            else big.add(x);
         }
-        if(k <= big.size()){ //第k大的数在big数组
+        if(big.size() >= k){ //第k大的数在big数组
             return quickSelect(big, k);
-        }else if(nums.size() - k < small.size()){
-            return quickSelect(small, small.size() + k - nums.size());
+        }else if(equal.size()+big.size() < k){ //第k大的数在small数组
+            return quickSelect(small, k-(equal.size()+big.size()));
         }else{
-            return base;
+            return target;
         }
     }
 }
