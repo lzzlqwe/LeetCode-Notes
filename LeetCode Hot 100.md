@@ -2970,3 +2970,49 @@ class Solution {
     }
 }
 ```
+
+
+# 补充题
+
+## [1.排序数组](https://leetcode.cn/problems/sort-an-array/description/)
+思路：快速排序经典模板（挖坑法 + 随机选择基准点）     
+代码：
+```
+class Solution {
+    public int[] sortArray(int[] nums) {
+        quickSort(nums, 0, nums.length-1);
+        return nums;
+    }
+
+    //快速排序
+    public void quickSort(int[] nums, int left, int right){
+        if(left >= right)
+            return;
+        int mid = partition(nums, left, right);
+        quickSort(nums, left, mid-1);
+        quickSort(nums, mid+1, right);
+    }
+
+    //找到一个基准并划分为两个区间，同时返回划分后基准的下标（挖坑法）
+    public int partition(int[] nums, int left, int right){
+        int idx = new Random().nextInt(right - left + 1) + left; //随机选择一个节点
+        int i = left, j = right;
+        swap(nums, idx, i);//交换首节点和随机节点，以随机节点为基准
+        int flag = nums[i]; //哨兵节点
+        while(i < j){
+            while(i < j && nums[j] >= flag) j--;
+            nums[i] = nums[j];
+            while(i < j && nums[i] < flag) i++;
+            nums[j] = nums[i];
+        }
+        nums[i] = flag;
+        return i;
+    }
+
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+```
