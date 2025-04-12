@@ -93,7 +93,7 @@ class Solution {
 ```
 
 ## [3.三数之和](https://leetcode.cn/problems/3sum/description/)
-思路：先排序，然后定义三个指针i，left和right，外层循环指针i从0遍历到倒数第三个位置（留两个位置给相向指针left和right），指针left从i+1开始，指针right从最右边开始。（如果题目要求结果不能重复，则三个指针都只指向第一个重复元素，绕过后续重复元素）  
+思路：记得先排序！！！，然后定义三个指针i，left和right，外层循环指针i从0遍历到倒数第三个位置（留两个位置给相向指针left和right），指针left从i+1开始，指针right从最右边开始。（如果题目要求结果不能重复，则三个指针都只指向第一个重复元素，绕过后续重复元素）（Arrays.asList()用于将数组转换为List，但他的长度是不可改变的，再套上一层new ArrayList即可变）  
 代码：
 ```
 class Solution {
