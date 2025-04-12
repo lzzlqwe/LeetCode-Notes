@@ -3012,3 +3012,34 @@ class Solution {
     }
 }
 ```
+
+
+## [2.二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/description/)
+思路：和[二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)类似，然后偶数层需要使用Collections.reverse(list)进行反转。   
+代码：
+```
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<TreeNode> queue = new LinkedList<>();//队列
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root != null) queue.addLast(root);
+        int depth = 0;
+        //BFS
+        while(!queue.isEmpty()){
+            List<Integer> list = new ArrayList<>();
+            int n = queue.size(); //队列元素个数表示当前层有几个节点
+            depth++;
+            for(int i = 0; i < n; i++){
+                TreeNode node = queue.removeFirst();
+                list.add(node.val);
+                if(node.left != null) queue.addLast(node.left);
+                if(node.right != null) queue.addLast(node.right);
+            }
+            if(depth % 2 == 0) //偶数层则进行反转
+                Collections.reverse(list);
+            ans.add(list);
+        }
+        return ans;
+    }
+}
+```
