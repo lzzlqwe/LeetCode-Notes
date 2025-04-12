@@ -1054,14 +1054,14 @@ class Solution {
         ListNode preHead = new ListNode(0, head);
         ListNode cur = preHead;
         //找left位置的前缀节点
-        for(int i = 1; i < left; i++){
+        for(int i = 0; i < left - 1; i++){
             cur = cur.next;
         }
         ListNode listLeft = cur;
         //反转[left, right]链表
         ListNode pre = null;
         cur = listLeft.next;
-        for(int i = 0; i < right-left+1; i++){
+        for(int i = left; i <= right; i++){
             ListNode nxt = cur.next;
             cur.next = pre;
             pre = cur;
