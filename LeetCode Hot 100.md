@@ -130,6 +130,8 @@ class Solution {
 ```
 
 ## [4.接雨水](https://leetcode.cn/problems/trapping-rain-water/description/)
+
+### 方法一：前后缀最大值（空间复杂度O(n)）
 思路：定义两个数组，前缀数组记录从左边到下标i的最大高度，后缀数组记录从右边到下标i的最大高度，有了这两个数组就可以计算各个下标i的盛水单位量。  
 代码：
 ```
@@ -158,6 +160,33 @@ class Solution {
     }
 }
 ```
+
+### 方法二：相向双指针（空间复杂度O(1)）
+思路：定义两个相向双指针left和right，left和right指针分别对应preMax和postMax，分别记录前缀和后缀的最高柱子高度（包括当前索引）。每次遵循“谁小移动谁”原则，“小”指的是前缀和后缀的最高柱子高度，移动前记录当前“小”下标的雨水量。详见代码   
+代码：
+```
+class Solution {
+    public int trap(int[] height) {
+        int n = height.length;
+        int left = 0, right = n - 1;
+        int preMax = 0, postMax = 0; //记录前缀和后缀的最高柱子高度（包括当前索引）
+        int ans = 0; //记录答案
+        while(left < right){
+            preMax = Math.max(preMax, height[left]);
+            postMax = Math.max(postMax, height[right]);
+            if(preMax < postMax){
+                ans += Math.min(preMax, postMax) - height[left];
+                left++;
+            }else{
+                ans += Math.min(preMax, postMax) - height[right];
+                right--;
+            }
+        }
+        return ans;
+    }
+}
+```
+
 
 # 滑动窗口
 
