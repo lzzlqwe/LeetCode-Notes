@@ -175,10 +175,10 @@ class Solution {
             preMax = Math.max(preMax, height[left]);
             postMax = Math.max(postMax, height[right]);
             if(preMax < postMax){
-                ans += Math.min(preMax, postMax) - height[left];
+                ans += preMax - height[left];
                 left++;
             }else{
-                ans += Math.min(preMax, postMax) - height[right];
+                ans += postMax - height[right];
                 right--;
             }
         }
