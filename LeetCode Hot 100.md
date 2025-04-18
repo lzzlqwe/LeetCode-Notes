@@ -473,7 +473,7 @@ class Solution {
 }
 ```
 
-## [4.除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/description/)
+## [4.除自身以外数组的乘积（待优化空间）](https://leetcode.cn/problems/product-of-array-except-self/description/)
 
 思路：利用前缀积和后缀积即可得到答案。  
 代码：
