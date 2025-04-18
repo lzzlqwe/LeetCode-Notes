@@ -1186,6 +1186,46 @@ class Solution {
 }
 ```
 
+## [16.重排链表](https://leetcode.cn/problems/reorder-list/description/)
+思路：先快慢指针找出中间节点，得到右边链表。然后反转右边链表，并和左边链表合并(记得合并链表的终止条件是list2.next == null)。    
+代码：
+```
+class Solution {
+    public void reorderList(ListNode head) {
+        //快慢指针找到中间节点
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        //反转右半部分的链表
+        ListNode list2 = reverse(slow);
+        //合并链表
+        ListNode list1 = head;
+        while(list2.next != null){ //记得合并链表的终止条件是list2.next == null
+            ListNode next1 = list1.next;
+            ListNode next2 = list2.next;
+            list1.next = list2;
+            list2.next = next1;
+            list1 = next1;
+            list2 = next2;
+        } 
+    }
+    
+    //反转链表
+    public ListNode reverse(ListNode cur){
+        ListNode pre = null;
+        while(cur != null){
+            ListNode nxt = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        return pre;
+    }
+}
+```
+
 # 二叉树
 
 ## [1.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/description/)
