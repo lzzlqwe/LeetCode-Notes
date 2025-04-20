@@ -2594,7 +2594,7 @@ class Solution {
 }
 ```
 
-## [9.最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/description/?envType=study-plan-v2&envId=top-100-liked)
+## [10.最长有效括号](https://leetcode.cn/problems/longest-valid-parentheses/description/?envType=study-plan-v2&envId=top-100-liked)
 思路：dp[i]表示以s[i]结尾的有效括号最长长度。for循环从下标1开始遍历，只找右括号（左括号结尾的长度肯定为0）并进一步判断：如果前一个括号是'('，则状态转移方程为dp[i] = dp[i-2] + 2; 否则如果前一个字符是')'且s[i-dp[i-1]-1]是左括号，状态转移方程为dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2]。记得有三处地方需要判断下标是否越界。最大的dp[i]就是答案。  
 代码：
 ```
