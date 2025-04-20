@@ -2855,7 +2855,7 @@ class Solution {
         for(int x : nums){
             if(num == 0) //如果当前计数为0，则将其作为众数
                 ans = x;
-            if(x == num) num++; //当前值为众数，加一
+            if(x == ans) num++; //当前值为众数，加一
             else num--; //减一
         }   
         return ans;
