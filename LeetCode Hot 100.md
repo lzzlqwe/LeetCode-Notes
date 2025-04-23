@@ -2271,6 +2271,42 @@ class Solution {
 }
 ```
 
+## [2.前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/description/?envType=study-plan-v2&envId=top-100-liked)
+思路：第一步统计各个数的频数。第二步进行桶排序，把出现次数相同的元素，放到同一个桶buckets中。第三步倒序遍历 buckets，把 buckets 中的元素加到答案中。一旦答案的长度等于 k，就立刻返回答案。
+
+代码：
+```
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        //第一步统计各个数的频数
+        Map<Integer, Integer> mp = new HashMap<>();
+        int maxCnt = 0;
+        for(int x : nums){
+            mp.merge(x, 1, Integer::sum);
+            maxCnt = Math.max(maxCnt, mp.get(x));//更新最大频数
+        }
+        //第二步进行桶排序
+        List<Integer>[] bucktes = new ArrayList[maxCnt+1];
+        for(int i = 1; i < bucktes.length; i++){
+            bucktes[i] = new ArrayList<>();
+        }
+        for(Map.Entry<Integer, Integer> e : mp.entrySet()){
+            bucktes[e.getValue()].add(e.getKey());
+        }
+        //第三步找到频率前k高元素
+        int[] ans = new int[k];
+        int j = 0;
+        for(int i = maxCnt; i >= 1; i--){
+            for(int x : bucktes[i]){
+                ans[j++] = x;
+                if(j == k) return ans;
+            }
+        }
+        return null;
+    }
+}
+```
+
 
 # 贪心算法
 
