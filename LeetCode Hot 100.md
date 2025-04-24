@@ -3071,6 +3071,8 @@ class Solution {
 # 补充题
 
 ## [1.排序数组](https://leetcode.cn/problems/sort-an-array/description/)
+
+### 方法一（快速排序）
 思路：快速排序经典模板（挖坑法 + 随机选择基准点）     
 代码：
 ```
@@ -3103,6 +3105,68 @@ class Solution {
         }
         nums[i] = flag;
         return i;
+    }
+
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+```
+
+### 方法二（堆排序）
+思路：堆排序，首先将数组转换为最大堆，然后依次取出最大值并调整堆。详见代码思路。      
+代码：
+```
+class Solution {
+    public int[] sortArray(int[] nums) {
+        heapSort(nums);
+        return nums;
+    }
+
+    //堆排序
+    public void heapSort(int[] nums){
+        int len = nums.length - 1;
+        buildMaxHeap(nums, len);//第一步：创建大根堆
+        // 第二步：依次取出最大值并调整堆
+        for(int i = len; i >= 1; i--){
+            //堆顶就是最大值
+            swap(nums, 0, i); //堆顶元素交换到末尾
+            len--; //记得忽略交换到堆后面的元素！！！
+            maxHeapify(nums, 0, len);
+        }
+    }   
+
+    //创建大根堆
+    public void buildMaxHeap(int[] nums, int len){
+        // 从最后一个非叶子节点开始，依次调整每个节点，使其满足最大堆的性质
+        for(int i = len / 2; i >= 0; i--){ 
+            maxHeapify(nums, i, len);
+        }
+    }
+
+    // 调整以i为根节点的子树，使其满足最大堆的性质
+    public void maxHeapify(int[] nums, int i, int len){
+        // 循环条件：只要当前节点有左子节点
+        while(i * 2 + 1 <= len){
+            int lson = i * 2 + 1; // 左子节点的索引
+            int rson = i * 2 + 2; // 右子节点的索引
+            // 记录最大值的索引，初始为当前节点
+            int large = i;
+            if(lson <= len && nums[lson] > nums[large]){
+                large = lson;
+            }
+            if(rson <= len && nums[rson] > nums[large]){
+                large = rson;
+            }
+            if(large != i){ //若最大值不是父节点，则和子节点交换
+                swap(nums, i, large);
+                i = large;
+            }else{
+                break;
+            }
+        }
     }
 
     public void swap(int[] nums, int i, int j){
