@@ -3177,6 +3177,46 @@ class Solution {
 }
 ```
 
+### 方法三（归并排序）
+思路：归并排序，分而治之思想。      
+代码：
+```
+class Solution {
+    int[] temp;
+
+    public int[] sortArray(int[] nums) {
+        temp = new int[nums.length];
+        mergeSort(nums, 0, nums.length-1);
+        return nums;
+    }
+
+    public void mergeSort(int[] nums, int l, int r){
+        if(l >= r)
+            return;
+        int mid = (l + r) / 2;
+        mergeSort(nums, l, mid);
+        mergeSort(nums, mid+1, r);
+        //合并两个有序数组到temp
+        int cnt = 0, i = l, j = mid + 1;
+        while(i <= mid && j <= r){
+            if(nums[i] < nums[j])
+                temp[cnt++] = nums[i++];
+            else
+                temp[cnt++] = nums[j++];
+        }
+        if(i > mid){
+            while(j <= r) temp[cnt++] = nums[j++];
+        }else{
+            while(i <= mid) temp[cnt++] = nums[i++];
+        }
+        //拷贝temp数组到nums数组
+        for(int k = l; k <= r; k++){
+            nums[k] = temp[k-l];
+        }
+    }
+}
+```
+
 
 ## [2.二叉树的锯齿形层序遍历](https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/description/)
 思路：和[二叉树的层序遍历](https://leetcode.cn/problems/binary-tree-level-order-traversal/description/)类似，然后偶数层需要使用Collections.reverse(list)进行反转。   
