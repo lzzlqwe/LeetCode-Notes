@@ -3207,3 +3207,27 @@ class Solution {
     }
 }
 ```
+
+## [3.合并两个有序数组](https://leetcode.cn/problems/merge-sorted-array/description/)
+思路：双指针，逆序填充nums1数组。   
+代码：
+```
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i = m - 1, j = n - 1;
+        int idx = n + m - 1;
+        while(i >= 0 && j >= 0){
+            if(nums1[i] < nums2[j]){
+                nums1[idx--] = nums2[j--];
+            }else{
+                nums1[idx--] = nums1[i--];
+            }
+        }
+        if(i < 0){
+            while(j >= 0){
+                nums1[idx--] = nums2[j--];
+            }
+        }
+    }
+}
+```
