@@ -2780,7 +2780,7 @@ class Solution {
 ```
 
 ## [3.最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/description/)
-思路：最长公共子序列LCS。dp[i][j]表示text1前i和text2前j个字符的LCS长度。状态转移方程为，如果第i和第j个字符一样，则dp[i][j] = dp[i-1][j-1] + 1，否则dp[i][j] = max(dp[i-1][j], dp[i][j-1])。     
+思路：最长公共子序列LCS。dp[i][j]表示text1前i和text2前j个字符的LCS长度。状态转移方程为，如果第i和第j个字符一样，则dp[i][j] = dp[i-1][j-1] + 1，否则dp[i][j] = max(dp[i-1][j], dp[i][j-1])。[最长公共子串](https://www.nowcoder.com/discuss/703762136090062848)     
 代码：
 ```
 class Solution {
