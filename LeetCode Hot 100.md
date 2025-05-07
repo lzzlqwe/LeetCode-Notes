@@ -2556,7 +2556,7 @@ class Solution {
 ```
 
 ## [7.分割等和子集](https://leetcode.cn/problems/partition-equal-subset-sum/description/)
-思路：问题转换为从数组nums选择一些数，使得其和恰好为sum/2。0-1背包问题，状态转移方程为:dp[i][j] = dp[i-1][j] || dp[i-1][j-val]。     
+思路：问题转换为从数组nums选择一些数，使得其和恰好为sum/2。0-1背包问题，状态转移方程为:dp[i][j] = dp[i-1][j] || dp[i-1][j-val]。记得判断如果总和为奇数，返回false！！！     
 代码：
 ```
 class Solution {
