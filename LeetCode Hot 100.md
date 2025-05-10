@@ -1,6 +1,25 @@
 # 哈希表
 
-## [1.字母异位词分组](https://leetcode.cn/problems/group-anagrams/description/)
+## [1.两数之和](https://leetcode.cn/problems/two-sum/description/)
+思路：创建一个HashMap，存放值和下标，详见代码。  
+代码：
+```
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> mp = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            if(mp.containsKey(target - nums[i])){
+                return new int[]{i, mp.get(target - nums[i])};
+            }
+            mp.put(nums[i], i);
+        }
+        return null;
+    }
+}
+```
+
+
+## [2.字母异位词分组](https://leetcode.cn/problems/group-anagrams/description/)
 思路：创建一个HashMap，对每个字符串进行排序，排序后相同结果的归在同一个key下。  
 代码：
 ```
@@ -24,7 +43,7 @@ class Solution {
 }
 ```
 
-## [2.最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/description/)
+## [3.最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/description/)
 思路：nums用一个hash表来存放，遍历hash表，如果存在比他小1的值，则考虑比他小的值即可，跳过；如果不存在比他小1的值，则说明当前值可能是最长连续序列的起点。  
 代码：
 ```
