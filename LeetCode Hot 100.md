@@ -41,7 +41,7 @@ class Solution {
 ```
 
 ## [3.最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/description/)
-思路：nums用一个hash表来存放，遍历hash表，如果存在比他小1的值，则考虑比他小的值即可，跳过；如果不存在比他小1的值，则说明当前值可能是最长连续序列的起点。  
+思路：nums用一个hash表来存放，遍历hash表（注意不能遍历nums，会超时），如果存在比他小1的值，则考虑比他小的值即可，跳过；如果不存在比他小1的值，则说明当前值可能是最长连续序列的起点。  
 代码：
 ```
 class Solution {
@@ -51,8 +51,8 @@ class Solution {
         for(int x : nums) 
             set.add(x);
         int maxLength = 0;
-        //遍历hash表
-        for(int x : set){
+        //遍历hash表（注意！！！！！！！！！！！！！）
+        for(int x : set){ 
             if(set.contains(x-1)) //如果存在比他小1的值，则考虑比他小的值即可。
                 continue;
             int t = x; //不存在比他小1的值，说明当前值可能是最长连续序列的起点
