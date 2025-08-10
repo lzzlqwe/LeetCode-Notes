@@ -30,13 +30,10 @@ class Solution {
             char[] carr = str.toCharArray();
             Arrays.sort(carr);
             String key = new String(carr);
-            if(mp.containsKey(key))
-                mp.get(key).add(str);
-            else{
-                List<String> list = new ArrayList<>();
-                list.add(str);
-                mp.put(key, list); 
+            if(!mp.containsKey(key)){
+                mp.put(key, new ArrayList<>());
             }
+            mp.get(key).add(str);
         }
         return new ArrayList<>(mp.values());
     }
