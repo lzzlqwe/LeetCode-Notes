@@ -491,6 +491,7 @@ class Solution {
 
 ## [4.除自身以外数组的乘积（待优化空间）](https://leetcode.cn/problems/product-of-array-except-self/description/)
 
+### 方法一
 思路：利用前缀积和后缀积即可得到答案。  
 代码：
 ```
@@ -510,6 +511,28 @@ class Solution {
         int[] ans = new int[n];
         for(int i = 0; i < n; i++)
             ans[i] = pre[i] * post[i];
+        return ans;
+    }
+}
+```
+
+### 方法二
+思路：优化空间。  
+代码：
+```
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] ans = new int[n];
+        ans[0] = 1;
+        for(int i = 1; i < n; i++){
+            ans[i] = ans[i-1] * nums[i-1];
+        }
+        int post = 1;
+        for(int i = n-1; i >= 0; i--){
+            ans[i] = post * ans[i];
+            post = post * nums[i];
+        }
         return ans;
     }
 }
