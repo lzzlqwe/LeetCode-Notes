@@ -1142,16 +1142,6 @@ class Solution {
 思路：在链表前面加一个哨兵节点。首先一趟扫描计算总节点数，之后计算总共需要反转多少段链表，再反转当前段的链表。  
 代码：
 ```
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         //添加哨兵节点
