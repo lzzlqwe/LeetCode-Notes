@@ -547,17 +547,22 @@ class Solution {
     public int firstMissingPositive(int[] nums) {
         int n = nums.length;
         for(int i = 0; i < n; i++){
-            //如果当前数为[1-n]的正整数且不在他应有的位置，则将他和他应有的位置进行交换
-            while(1 <= nums[i] && nums[i] <= n && nums[i] != nums[nums[i]-1]){
-                int temp = nums[nums[i]-1]; //注意不能先temp = nums[i]，因为nums[i]会改变！！
-                nums[nums[i]-1] = nums[i];
-                nums[i] = temp;
+            while(1 <= nums[i] && nums[i] <= n && nums[nums[i] - 1] != nums[i]){
+                swap(nums, nums[i]-1, i);
             }
         }
         for(int i = 0; i < n; i++){
-            if(nums[i] != i + 1) return i + 1;
+            if(nums[i] != i + 1){
+                return i + 1;
+            }
         }
         return n + 1;
+    }
+
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
 ```
